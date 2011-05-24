@@ -7,11 +7,13 @@
 			return array(
 				'db' => array(
 					'MetaKeywordsAppend' => 'Boolean',
-					'MetaDescriptionAppend' => 'Enum("Beginning, End, No")'
+					'MetaDescriptionAppend' => 'Enum("Beginning, End, No")',
+					'ExtraMetaAppend' => 'Boolean'
 				),
 				'defaults' => array(
 					'MetaKeywordsAppend' => 1,
-					'MetaDescriptionAppend' => 'Beginning'
+					'MetaDescriptionAppend' => 'Beginning',
+					'ExtraMetaAppend' => 1
 				)
 			);
 		}
@@ -51,9 +53,9 @@
 				if($site_config->MetaDescription and $this->owner->MetaDescriptionAppend == 'End') $description[] = $site_config->MetaDescription;
 				$tags .= "<meta name=\"description\" content=\"" . Convert::raw2att(implode(' ', $description)) . "\" />\n";
 			}
-			if($this->owner->ExtraMeta || $site_config->ExtraMeta) { 
+			if($this->owner->ExtraMeta || ($site_config->ExtraMeta and $this->owner->ExtraMetaAppend)) { 
 				if($this->owner->ExtraMeta) $tags .= $this->owner->ExtraMeta . "\n";
-				if($site_config->ExtraMeta) $tags .= $site_config->ExtraMeta . "\n";
+				if($site_config->ExtraMeta and $this->owner->ExtraMetaAppend) $tags .= $site_config->ExtraMeta . "\n";
 			}
 
 		}
@@ -62,6 +64,7 @@
 		
 			$fields->addFieldToTab('Root.Content.Metadata', new CheckboxField('MetaKeywordsAppend', 'Append global keywords?'), 'MetaDescription');
 			$fields->addFieldToTab('Root.Content.Metadata', new DropdownField('MetaDescriptionAppend', 'Append global description?',  array('Beginning' => 'Yes, to the beginning', 'End' => 'Yes, to the end', 'No' => 'No')), 'ExtraMeta');
+			$fields->addFieldToTab('Root.Content.Metadata', new CheckboxField('ExtraMetaAppend', 'Append global custom meta tags?'));
 			
 			return $fields;
 		}
