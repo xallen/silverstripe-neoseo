@@ -2,14 +2,13 @@
 
 	class SiteConfigExtension extends DataObjectDecorator {
 	
-		
 		function extraStatics() {
 		
 			return array(
 				'db' => array(
 					'MetaDescription' => 'Text',
 					'MetaKeywords' => 'Varchar(255)',
-					'ExtraMeta' => 'HTMLText',
+					'ExtraMeta' => 'HTMLText'
 				)
 			);
 		}
