@@ -61,7 +61,7 @@
 		}
 		
 		public function updateCMSFields($fields) {
-		
+			
 			$fields->addFieldToTab('Root.Content.Metadata', new CheckboxField('MetaKeywordsAppend', 'Append global keywords?'), 'MetaDescription');
 			$fields->addFieldToTab('Root.Content.Metadata', new DropdownField('MetaDescriptionAppend', 'Append global description?',  array('Beginning' => 'Yes, to the beginning', 'End' => 'Yes, to the end', 'No' => 'No')), 'ExtraMeta');
 			$fields->addFieldToTab('Root.Content.Metadata', new CheckboxField('ExtraMetaAppend', 'Append global custom meta tags?'));
