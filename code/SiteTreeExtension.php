@@ -38,9 +38,9 @@
 
 			$charset = ContentNegotiator::get_encoding();
 			$tags .= "<meta http-equiv=\"Content-type\" content=\"text/html; charset=$charset\" />\n";
-			if($this->owner->MetaKeywords || $site_config->MetaKeywords) {
+			if($this->owner->MetaKeywords || ($site_config->MetaKeywords and $this->owner->MetaDescriptionAppend)) {
 				$keywords = array();
-				if($site_config->MetaKeywords) $keywords[] = $site_config->MetaKeywords;
+				if($site_config->MetaKeywords and $this->owner->MetaDescriptionAppend) $keywords[] = $site_config->MetaKeywords;
 				if($this->owner->MetaKeywords) $keywords[] = $this->owner->MetaKeywords;
 				$tags .= "<meta name=\"keywords\" content=\"" . Convert::raw2att(implode(', ', $keywords)) . "\" />\n";
 			}
