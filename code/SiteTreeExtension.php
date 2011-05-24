@@ -6,12 +6,12 @@
 		
 			return array(
 				'db' => array(
-					'MetaDescriptionAppend' => 'Boolean',
-					'ExtraMetaAppend' => 'Enum("Beginning, End, No")'
+					'MetaKeywordsAppend' => 'Boolean',
+					'MetaDescriptionAppend' => 'Enum("Beginning, End, No")'
 				),
 				'defaults' => array(
-					'MetaDescriptionAppend' => 1,
-					'ExtraMetaAppend' => 'Beginning'
+					'MetaKeywordsAppend' => 1,
+					'MetaDescriptionAppend' => 'Beginning'
 				)
 			);
 		}
@@ -38,16 +38,17 @@
 
 			$charset = ContentNegotiator::get_encoding();
 			$tags .= "<meta http-equiv=\"Content-type\" content=\"text/html; charset=$charset\" />\n";
-			if($this->owner->MetaKeywords || ($site_config->MetaKeywords and $this->owner->MetaDescriptionAppend)) {
+			if($this->owner->MetaKeywords || ($site_config->MetaKeywords and $this->owner->MetaKeywordsAppend)) {
 				$keywords = array();
-				if($site_config->MetaKeywords and $this->owner->MetaDescriptionAppend) $keywords[] = $site_config->MetaKeywords;
+				if($site_config->MetaKeywords and $this->owner->MetaKeywordsAppend) $keywords[] = $site_config->MetaKeywords;
 				if($this->owner->MetaKeywords) $keywords[] = $this->owner->MetaKeywords;
 				$tags .= "<meta name=\"keywords\" content=\"" . Convert::raw2att(implode(', ', $keywords)) . "\" />\n";
 			}
-			if($this->owner->MetaDescription || $site_config->MetaDescription) {
+			if($this->owner->MetaDescription || ($site_config->MetaDescription and $this->owner->MetaDescriptionAppend != 'No')) {
 				$description = array();
-				if($site_config->MetaDescription) $description[] = $site_config->MetaDescription;
+				if($site_config->MetaDescription and $this->owner->MetaDescriptionAppend == 'Beginning') $description[] = $site_config->MetaDescription;
 				if($this->owner->MetaDescription) $description[] = $this->owner->MetaDescription;
+				if($site_config->MetaDescription and $this->owner->MetaDescriptionAppend == 'End') $description[] = $site_config->MetaDescription;
 				$tags .= "<meta name=\"description\" content=\"" . Convert::raw2att(implode(' ', $description)) . "\" />\n";
 			}
 			if($this->owner->ExtraMeta || $site_config->ExtraMeta) { 
@@ -59,8 +60,8 @@
 		
 		public function updateCMSFields($fields) {
 		
-			$fields->addFieldToTab('Root.Content.Metadata', new CheckboxField('MetaDescriptionAppend', 'Append global keywords?'), 'MetaDescription');
-			$fields->addFieldToTab('Root.Content.Metadata', new DropdownField('ExtraMetaAppend', 'Append global description?',  array('Beginning' => 'Yes, to the beginning', 'End' => 'Yes, to the end', 'No' => 'No')), 'ExtraMeta');
+			$fields->addFieldToTab('Root.Content.Metadata', new CheckboxField('MetaKeywordsAppend', 'Append global keywords?'), 'MetaDescription');
+			$fields->addFieldToTab('Root.Content.Metadata', new DropdownField('MetaDescriptionAppend', 'Append global description?',  array('Beginning' => 'Yes, to the beginning', 'End' => 'Yes, to the end', 'No' => 'No')), 'ExtraMeta');
 			
 			return $fields;
 		}
