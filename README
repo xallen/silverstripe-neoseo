@@ -1,13 +1,15 @@
-TODO: Any kind of documentation..
-
 Templates
 ---------
 
 No modification is required to most templates. The only exception is when you
 have removed $MetaTags from the head of a template. The rest of this section
-applies only to users who have removed $MetaTags from their template.
+applies only to users who have removed $MetaTags from their template. I really
+do recommend that you consider using $MetaTags rather than processing them
+manually - so much easier!
 
 The following variables are available to templates:
+
+  [Metadata]
 	
   $AppendMetaKeywords           (boolean) Append global data?
   $MetaKeywords                 (string) Page's meta keywords
@@ -23,3 +25,16 @@ The following variables are available to templates:
   $AppendExtraMeta              (boolean) Append extra meta tags?
   $ExtraMeta                    (string) Page's extra meta tags
   $SiteConfig.ExtraMeta         (string Global extra meta tags
+  
+  [General information about analytics]
+
+  You will need to include all of the tracker JavaScript in the template as it
+  will not be supplied by any template variable. This is not true if you are
+  using $MetaTags in your template, however.
+  
+  [Analytics - Google]
+  
+  $SiteConfig.AnalyticsGoogleEnabled
+                                (boolean) Google Analytics enabled?
+  $SiteConfig.AnalyticsGoogleAccountNumber
+                                (string) Google Analytics account number
