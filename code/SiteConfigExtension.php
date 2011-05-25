@@ -2,9 +2,11 @@
 
 	class SiteConfigExtension extends DataObjectDecorator {
 	
+		/* Append parent's static variables. */
 		function extraStatics() {
 		
 			return array(
+				/* Database fields. */
 				'db' => array(
 					'MetaDescription' => 'Text',
 					'MetaKeywords' => 'Varchar(255)',
@@ -13,6 +15,7 @@
 			);
 		}
 
+		/* New/modified fields for the CMS. */
 		public function updateCMSFields($fields) {
 		
 			$global_metadata_description = '<p>Any data entered into the fields below will be appended before the metadata specified for any page on the website. It will also be used as the default data for pages that have not yet had metadata configured.</p>';

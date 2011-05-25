@@ -2,14 +2,17 @@
 
 	class SiteTreeExtension extends DataObjectDecorator {
 	
+		/* Append parent's static variables. */
 		function extraStatics() {
 		
 			return array(
+				/* Database fields. */
 				'db' => array(
 					'MetaKeywordsAppend' => 'Boolean',
 					'MetaDescriptionAppend' => 'Enum("Beginning, End, No")',
 					'ExtraMetaAppend' => 'Boolean'
 				),
+				/* Default database field values. */
 				'defaults' => array(
 					'MetaKeywordsAppend' => true,
 					'MetaDescriptionAppend' => 'Beginning',
