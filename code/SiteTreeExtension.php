@@ -80,6 +80,7 @@
 			
 		}
 		
+		/* New/modified fields for the CMS. */
 		public function updateCMSFields($fields) {
 			
 			$fields->addFieldToTab('Root.Content.Metadata', new CheckboxField('MetaKeywordsAppend', 'Append global keywords?'), 'MetaDescription');
