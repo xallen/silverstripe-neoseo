@@ -11,9 +11,9 @@
 					'ExtraMetaAppend' => 'Boolean'
 				),
 				'defaults' => array(
-					'MetaKeywordsAppend' => 1,
+					'MetaKeywordsAppend' => true,
 					'MetaDescriptionAppend' => 'Beginning',
-					'ExtraMetaAppend' => 1
+					'ExtraMetaAppend' => true
 				)
 			);
 		}
@@ -57,7 +57,6 @@
 				if($this->owner->ExtraMeta) $tags .= $this->owner->ExtraMeta . "\n";
 				if($site_config->ExtraMeta and $this->owner->ExtraMetaAppend) $tags .= $site_config->ExtraMeta . "\n";
 			}
-
 		}
 		
 		public function updateCMSFields($fields) {
