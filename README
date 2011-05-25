@@ -9,17 +9,17 @@ applies only to users who have removed $MetaTags from their template.
 
 The following variables are available to templates:
 	
-	$AppendMetaKeywords				(boolean) Append global data?
-	$MetaKeywords					(string) Page's meta keywords
-	$SiteConfig.MetaKeywords		(string) Global meta keywords
-	
-	$AppendMetaDescription			(string) Append meta description?
-									(option) 'Beginning' = append to beginning
-									(option) 'End' = append to end
-									(option) 'No' = do not append
-	$MetaDescription				(string) Page's meta description
-	$SiteConfig.MetaDescription		(string) Global meta description
-	
-	$AppendExtraMeta				(boolean) Append extra meta tags?
-	$ExtraMeta						(string) Page's extra meta tags
-	$SiteConfig.ExtraMeta			(string Global extra meta tags
+  $AppendMetaKeywords           (boolean) Append global data?
+  $MetaKeywords                 (string) Page's meta keywords
+  $SiteConfig.MetaKeywords      (string) Global meta keywords
+  
+  $AppendMetaDescription        (string) Append meta description?
+                                (option) 'Beginning' = append to beginning
+                                (option) 'End' = append to end
+                                (option) 'No' = do not append
+  $MetaDescription              (string) Page's meta description
+  $SiteConfig.MetaDescription   (string) Global meta description
+  
+  $AppendExtraMeta              (boolean) Append extra meta tags?
+  $ExtraMeta                    (string) Page's extra meta tags
+  $SiteConfig.ExtraMeta         (string Global extra meta tags
