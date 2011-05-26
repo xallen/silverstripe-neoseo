@@ -70,6 +70,8 @@
 				'YahooAnalyticsVariables',
 				'YahooAnalyticsVariable'
 			);
+			$yahoo_analytics_variables->setParentClass('SiteConfig'); 
+			$yahoo_analytics_variables->sourceId = 1;
 			$fields->addFieldToTab('Root.SearchEngineOptimization.Analytics.YahooWebAnalytics', new HeaderField('AnalyticsYahooVariablesHeader', 'Variables', 4));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.Analytics.YahooWebAnalytics', new LiteralField('AnalyticsYahooVariablesHelp', $yahoo_analytics_variables_help));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.Analytics.YahooWebAnalytics', $yahoo_analytics_variables);
