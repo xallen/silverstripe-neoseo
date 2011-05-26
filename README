@@ -1,3 +1,36 @@
+About
+-----
+
+I wrote NeoSEO to eliminate some of the more tedious end-of-project concerns
+such as configuring analytics and metadata. SEO is an extremely important part
+of website development these days but is essentially just data entry. I hope my
+little contribution to the SilverStripe community makes someone's life just a
+tiny bit easier!
+
+Requirements
+------------
+
+SilverStripe 2.4.0+
+
+Installation
+------------
+
+1) Unpack the NeoSEO directory to the root of your SilverStripe install.
+2) Ensure the directory is named 'neoseo'. Case is important on *NIX.
+3) Browse to: http://<silverstripe-install-url>/dev/build?flush=all
+
+You can now configure most of NeoSEO via the "Search Engine Optimization" panel
+under your website configuration in SilverStripe's admin interface.
+
+Features
+--------
+
+Some of NeoSEO's current features include:
+  - Global metadata configuration
+  - Page-by-page options to append global metadata, with extended paramaters
+    when applicable.
+  - Support for Google Analytics, and Yahoo! Analytics.
+
 Templates
 ---------
 
