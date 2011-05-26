@@ -130,11 +130,13 @@
 			/* Return if suggestion is disabled. */
 			if(!SiteConfig::current_site_config()->KeywordSuggestionEnabled) return '';
 			
+			/* Content to search through comes from the SiteTree field Content. */
 			$string = $this->owner->Content;
-			$min_word_char = 4;
-			$keyword_amount = 15;
-			$exclude_words = SiteConfigExtension::excluded_word_list();
 			
+			/* SiteConfig supplies the following variables with their data from the CMS. */
+			$min_word_char = SiteConfig::current_site_config()->KeywordSuggestionMinimumLength;
+			$keyword_amount = SiteConfig::current_site_config()->KeywordSuggestionQuantity;
+			$exclude_words = SiteConfigExtension::excluded_word_list();
 			
 			//add space before br tags so words aren't concatenated when tags are stripped
 			$string = preg_replace('/\<br(\s*)?\/?\>/i', " <br />", $string); 
