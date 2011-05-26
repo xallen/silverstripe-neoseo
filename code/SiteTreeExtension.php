@@ -8,15 +8,13 @@
 			return array(
 				/* Database fields. */
 				'db' => array(
-					'MetaKeywordsAppend' => 'Boolean',
+					'MetaKeywordsAppend' => 'Boolean(1)',
 					'MetaDescriptionAppend' => 'Enum("Beginning, End, No")',
-					'ExtraMetaAppend' => 'Boolean'
+					'ExtraMetaAppend' => 'Boolean(1)'
 				),
 				/* Default database field values. */
 				'defaults' => array(
-					'MetaKeywordsAppend' => true,
 					'MetaDescriptionAppend' => 'Beginning',
-					'ExtraMetaAppend' => true
 				)
 			);
 		}

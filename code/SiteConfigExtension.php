@@ -14,7 +14,8 @@
 					'AnalyticsGoogleEnabled' => 'Boolean',
 					'AnalyticsGoogleAccountNumber' => 'Text',
 					'AnalyticsYahooEnabled' => 'Boolean',
-					'AnalyticsYahooTrackingId' => 'Text'
+					'AnalyticsYahooTrackingId' => 'Text',
+					'KeywordSuggestionEnabled' => 'Boolean(1)'
 				),
 				'has_many' => array(
 					'YahooAnalyticsVariables' => 'YahooAnalyticsVariable' /* This stores a list of configurable variables for YWA. */
