@@ -2,7 +2,12 @@ Behaviour.register({
 	/* Handle appending the suggested keywords to the MetaKeywords TextField. */
 	'a#NeoSEO_KeywordAppend': {
 		onclick: function() {
-			$('Form_EditForm_MetaKeywords').value += (", " + $('NeoSEO_Keywords').innerHTML);
+			/* If the MetaKeywords Textfield is blank we can just fill the field. */
+			if($('Form_EditForm_MetaKeywords').value === "") {
+				$('Form_EditForm_MetaKeywords').value = $('NeoSEO_Keywords').innerHTML;
+			} else {
+				$('Form_EditForm_MetaKeywords').value += (", " + $('NeoSEO_Keywords').innerHTML);
+			}
 			return false;
 		}
 	},
