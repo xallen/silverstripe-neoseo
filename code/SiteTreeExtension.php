@@ -109,8 +109,8 @@
 			/* Generate the list of suggested keywords. */
 			$suggested_keywords = $this->calculateKeywords($this->owner->Content, 4, 15, self::$exclude_words);
 			
-			/* There is no point having a suggestion box without suggestions! */
-			if($suggested_keywords !== "") {
+			/* Are there keyword suggestions available? */
+			if($suggested_keywords !== '') {
 			
 				/* Fill the suggestion field. This sets up the field so we can utilize Prototype later. */
 				$suggested_keywords_literal = "<p id=\"MetaKeywordsSuggestion\"><strong>Suggested keywords:</strong> <span id=\"NeoSEO_Keywords\">{$suggested_keywords}</span>.<br/><a id=\"NeoSEO_KeywordAppend\" href=\"#\">Append these keywords</a> | <a id=\"NeoSEO_KeywordReplace\" href=\"#\">Replace existing keywords with these keywords</a></p>";
@@ -134,6 +134,9 @@
 		 * @var $exclude_words
 		 */
 		private function calculateKeywords($string = '', $min_word_char = 4, $keyword_amount = 15,  $exclude_words = '' ) {
+			
+			/* Return if suggestion is disabled. */
+			if(!SiteConfig::current_site_config()->KeywordSuggestionEnabled) return '';
 			
 			$exclude_words = explode(", ", $exclude_words);
 			//add space before br tags so words aren't concatenated when tags are stripped

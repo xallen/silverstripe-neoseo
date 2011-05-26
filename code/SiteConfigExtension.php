@@ -29,15 +29,19 @@
 			/* Description for Global Metadata. */
 			$global_metadata_description = '<p>Any data entered into the fields below will be appended before the metadata specified for any page on the website. It will also be used as the default data for pages that have not yet had metadata configured.</p><p>&nbsp;</p>';
 			
-			/* Analytics Help. */
+			/* Analytics help. */
 			$google_analytics_help = '<p>A free account is required to utilize Google Analytics. You can <a href="http://analytics.google.com/" target="_blank">register here</a>, or sign in to your existing account to retrieve your account number <a href="https://www.google.com/accounts/ServiceLogin?service=analytics" target="_blank">here</a>.</p>';
 			$yahoo_analytics_help = '<p>An account is required to utilize Yahoo! Web Analytics. You can <a href="http://web.analytics.yahoo.com/lead_form" target="_blank">register here</a>, or sign in to your existing account to retrieve your tracking Id <a href="https://login.yahoo.com/config/login_verify2?.done=https://reports.web.analytics.yahoo.com/IndexTools/servlet/IndexTools/template/Login.vm" target="_blank">here</a>. Please note that this is a premium service and comes at a cost. It would be advisable to use Google Analytics unless you have a prior arrangement with Yahoo! Web Analytics.</p>';
 			$yahoo_analytics_variables_help = '<p>You can use the form below to configure the advanced options for Yahoo! Web Analytics. Documentation about the variables available to you and how to use them is <a href="http://help.yahoo.com/l/us/yahoo/smallbusiness/store/analytics/advanced/advanced-02.html" target="_blank">available here</a>.</p>';
+			
+			/* Keyword suggestion help. */
+			$keyword_suggestion_help = '<p>You may configure the keyword suggestion feature that appears on all pages below. If you find the CMS slows down with this enabled please consider either disabling the feature or setting the maximum content length for keyword suggestion to a lower value.</p>';
 		
 			/* Set up the tabs we need in advance. */
 			$fields->addFieldToTab('Root',
 				new TabSet('SearchEngineOptimization',
-					new Tab('GlobalMetadata'), 
+					new Tab('GlobalMetadata'),
+					new Tab('KeywordSuggestion'),
 					new TabSet('Analytics',
 						new Tab('GoogleAnalytics', 'Google Analytics'),
 						new Tab('YahooWebAnalytics', 'Yahoo! Web Analytics')
@@ -54,6 +58,11 @@
 			$fields->addFieldToTab('Root.SearchEngineOptimization.GlobalMetadata', new TextareaField('MetaKeywords', _t('SiteConfig.MetaKeywords', 'Keywords'), 1));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.GlobalMetadata', new TextareaField('MetaDescription', _t('SiteConfig.MetaDescription', 'Description')));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.GlobalMetadata', new TextareaField('ExtraMeta', _t('SiteConfig.ExtraMeta', 'Custom Meta Tags')));
+			
+			/* Keyword Suggestion fields. */
+			$fields->addFieldToTab('Root.SearchEngineOptimization.KeywordSuggestion', new HeaderField('KeywordSuggestionHeader', 'Keyword Suggestion'));
+			$fields->addFieldToTab('Root.SearchEngineOptimization.KeywordSuggestion', new LiteralField('KeywordSuggestionHelp', $keyword_suggestion_help));
+			$fields->addFieldToTab('Root.SearchEngineOptimization.KeywordSuggestion', new CheckboxField('KeywordSuggestionEnabled', 'Enable keyword suggestion'));
 
 			/* Analytics: Google Analytics fields. */
 			$fields->addFieldToTab('Root.SearchEngineOptimization.Analytics.GoogleAnalytics', new HeaderField('AnalyticsGoogleHeader', 'Google Analytics', 3));
