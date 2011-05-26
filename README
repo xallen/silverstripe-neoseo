@@ -83,4 +83,4 @@ The following variables are available to templates:
   $SiteConfig.YahooAnalyticsVariables
                                 (control) Array of variables for YWA
                                   (string) $Name
-								  (string) $Value
+                                  (string) $Value
