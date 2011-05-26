@@ -129,6 +129,15 @@
 			return $excluded_words;
 		}
 		
+		function onBeforeWrite() {
+			
+			/* Ensure the following variables are sensible (could cause horrendous errors). */
+			if($this->owner->KeywordSuggestionQuantity < 1 or $this->owner->KeywordSuggestionQuantity > 32) $this->owner->KeywordSuggestionQuantity = 15;
+			if($this->owner->KeywordSuggestionMinimumLength < 3 or $this->owner->KeywordSuggestionMinimumLength > 16) $this->owner->KeywordSuggestionMinimumLength = 4;
+			
+			parent::onBeforeWrite();
+		}
+		
 	}
 
 ?>
