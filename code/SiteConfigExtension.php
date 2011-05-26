@@ -18,14 +18,15 @@
 					'KeywordSuggestionEnabled' => 'Boolean(1)'
 				),
 				'has_many' => array(
-					'YahooAnalyticsVariables' => 'YahooAnalyticsVariable' /* This stores a list of configurable variables for YWA. */
+					'YahooAnalyticsVariables' => 'YahooAnalyticsVariable', /* This stores a list of configurable variables for YWA. */
+					'ExcludedWords' => 'ExcludedWord'
 				)
 			);
 		}
 
 		/* New/modified fields for the CMS. */
 		public function updateCMSFields($fields) {
-		
+
 			/* Description for Global Metadata. */
 			$global_metadata_description = '<p>Any data entered into the fields below will be appended before the metadata specified for any page on the website. It will also be used as the default data for pages that have not yet had metadata configured.</p><p>&nbsp;</p>';
 			
@@ -63,6 +64,16 @@
 			$fields->addFieldToTab('Root.SearchEngineOptimization.KeywordSuggestion', new HeaderField('KeywordSuggestionHeader', 'Keyword Suggestion'));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.KeywordSuggestion', new LiteralField('KeywordSuggestionHelp', $keyword_suggestion_help));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.KeywordSuggestion', new CheckboxField('KeywordSuggestionEnabled', 'Enable keyword suggestion'));
+			$fields->addFieldToTab('Root.SearchEngineOptimization.KeywordSuggestion', new HeaderField('KeywordSuggestionExclusionHeader', 'Excluded words', 4));
+			$excluded_words = new ComplexTableField(
+				$this,
+				'ExcludedWords',
+				'ExcludedWord',
+				null,
+				null,
+				'"SiteConfigID" = '.SiteConfig::current_site_config()->ID
+			);
+			$fields->addFieldToTab('Root.SearchEngineOptimization.KeywordSuggestion', $excluded_words);
 
 			/* Analytics: Google Analytics fields. */
 			$fields->addFieldToTab('Root.SearchEngineOptimization.Analytics.GoogleAnalytics', new HeaderField('AnalyticsGoogleHeader', 'Google Analytics', 3));
@@ -75,15 +86,16 @@
 			$fields->addFieldToTab('Root.SearchEngineOptimization.Analytics.YahooWebAnalytics', new LiteralField('AnalyticsYahooHelp', $yahoo_analytics_help));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.Analytics.YahooWebAnalytics', new CheckboxField('AnalyticsYahooEnabled', 'Enable Yahoo! Web Analytics'));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.Analytics.YahooWebAnalytics', new TextField('AnalyticsYahooTrackingId', 'Tracking Id (e.g. 1000111111111)'));
+			$fields->addFieldToTab('Root.SearchEngineOptimization.Analytics.YahooWebAnalytics', new HeaderField('AnalyticsYahooVariablesHeader', 'Variables', 4));
+			$fields->addFieldToTab('Root.SearchEngineOptimization.Analytics.YahooWebAnalytics', new LiteralField('AnalyticsYahooVariablesHelp', $yahoo_analytics_variables_help));
 			$yahoo_analytics_variables = new ComplexTableField(
 				$this,
 				'YahooAnalyticsVariables',
-				'YahooAnalyticsVariable'
+				'YahooAnalyticsVariable',
+				null,
+				null,
+				'"SiteConfigID" = '.SiteConfig::current_site_config()->ID
 			);
-			$yahoo_analytics_variables->setParentClass('SiteConfig'); 
-			$yahoo_analytics_variables->sourceId = 1;
-			$fields->addFieldToTab('Root.SearchEngineOptimization.Analytics.YahooWebAnalytics', new HeaderField('AnalyticsYahooVariablesHeader', 'Variables', 4));
-			$fields->addFieldToTab('Root.SearchEngineOptimization.Analytics.YahooWebAnalytics', new LiteralField('AnalyticsYahooVariablesHelp', $yahoo_analytics_variables_help));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.Analytics.YahooWebAnalytics', $yahoo_analytics_variables);
 			
 			/* Analytics: Nielsen NetView fields. */
