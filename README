@@ -27,6 +27,7 @@ Features
 
 Some of NeoSEO's current features include:
   - Global metadata configuration
+  - Keyword suggestion, with configurable options for exclusion, quantity, etc
   - Page-by-page options to append global metadata, with extended paramaters
     when applicable.
   - Support for Google Analytics, and Yahoo! Web Analytics.
