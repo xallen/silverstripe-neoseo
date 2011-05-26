@@ -133,6 +133,9 @@
 			/* Content to search through comes from the SiteTree field Content. */
 			$string = $this->owner->Content;
 			
+			/* TODO: RE(test). CamelCase matching (important nouns!) */
+			preg_match_all('/\b([A-Z][a-z]*)+[A-Z][a-z]+([A-Z][a-z]*)*\b/ ', $string, $matches);
+			
 			/* SiteConfig supplies the following variables with their data from the CMS. */
 			$min_word_char = SiteConfig::current_site_config()->KeywordSuggestionMinimumLength;
 			$keyword_amount = SiteConfig::current_site_config()->KeywordSuggestionQuantity;
