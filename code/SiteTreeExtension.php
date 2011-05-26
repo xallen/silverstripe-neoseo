@@ -104,17 +104,25 @@
 		/* New/modified fields for the CMS. */
 		public function updateCMSFields($fields) {
 			
-			$suggested_keywords = $this->calculateKeywords($this->owner->Content, 4, 15, self::$exclude_words);
-			
-			/* Fill the suggestion field. This sets up the field so we can utilize Prototype later. */
-			$suggested_keywords_literal = "<p id=\"MetaKeywordsSuggestion\"><strong>Suggested keywords:</strong> <span id=\"NeoSEO_Keywords\">{$suggested_keywords}</span>.<br/><a id=\"NeoSEO_KeywordAppend\" href=\"#\">Append these keywords</a> | <a id=\"NeoSEO_KeywordReplace\" href=\"#\">Replace existing keywords with these keywords</a></p>";
-			
 			$fields->addFieldToTab('Root.Content.Metadata', new CheckboxField('MetaKeywordsAppend', 'Append global keywords?'), 'MetaDescription');
-			$fields->addFieldToTab('Root.Content.Metadata', new LiteralField('MetaKeywordsSuggestion', $suggested_keywords_literal), 'MetaKeywordsAppend');
 			$fields->addFieldToTab('Root.Content.Metadata', new DropdownField('MetaDescriptionAppend', 'Append global description?',  array('Beginning' => 'Yes, to the beginning', 'End' => 'Yes, to the end', 'No' => 'No')), 'ExtraMeta');
 			$fields->addFieldToTab('Root.Content.Metadata', new CheckboxField('ExtraMetaAppend', 'Append global custom meta tags?'));
 			
-			Requirements::javascript('neoseo/javascript/neoseo-sitetree-metadata.js');
+			/* Generate the list of suggested keywords. */
+			$suggested_keywords = $this->calculateKeywords($this->owner->Content, 4, 15, self::$exclude_words);
+			
+			/* There is no point having a suggestion box without suggestions! */
+			if($suggested_keywords !== "") {
+			
+				/* Fill the suggestion field. This sets up the field so we can utilize Prototype later. */
+				$suggested_keywords_literal = "<p id=\"MetaKeywordsSuggestion\"><strong>Suggested keywords:</strong> <span id=\"NeoSEO_Keywords\">{$suggested_keywords}</span>.<br/><a id=\"NeoSEO_KeywordAppend\" href=\"#\">Append these keywords</a> | <a id=\"NeoSEO_KeywordReplace\" href=\"#\">Replace existing keywords with these keywords</a></p>";
+				
+				/* Insert the suggestion LiteralField in to the Metadata FieldSet. */
+				$fields->addFieldToTab('Root.Content.Metadata', new LiteralField('MetaKeywordsSuggestion', $suggested_keywords_literal), 'MetaKeywordsAppend');
+				
+				/* Utilize external JS (via Prototype) for form manipulation. */
+				Requirements::javascript('neoseo/javascript/neoseo-sitetree-metadata.js');
+			}
 			
 			return $fields;
 		}
