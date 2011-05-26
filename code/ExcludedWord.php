@@ -34,16 +34,26 @@
 		function requireDefaultRecords() {
 			parent::requireDefaultRecords();
 			
+			/* Exclusion list empty? Better fix that! */
 			$excluded_word = DataObject::get_one('ExcludedWord');
 			if(!$excluded_word) {
 				
-				$default_list = array('about', 'again', 'also', 'been', 'before', 'cause', 'come', 'could', 'default', 'does', 'each', 'edit', 'even', 'from', 'give', 'have', 'here', 'just', 'like', 'made', 'many', 'most', 'much', 'must', 'only', 'other', 'said', 'same', 'should', 'since', 'some', 'such', 'tell', 'than', 'that', 'their', 'them', 'then', 'there', 'these', 'they', 'thing', 'this', 'through', 'very', 'want', 'welcome', 'well', 'were', 'what', 'when', 'where', 'which', 'while', 'will', 'with', 'within', 'would', 'your', 'youre');
+				/* These words will be added one-by-one as exclusions. */
+				$default_list = array('about', 'again', 'also', 'been', 'before', 'cause', 'come', 'could', 'default',
+					'does', 'each', 'edit', 'even', 'from', 'give', 'have', 'here', 'just', 'like', 'made', 'many', 'most',
+					'much', 'must', 'only', 'other', 'said', 'same', 'should', 'since', 'some', 'such', 'tell', 'than',
+					'that', 'their', 'them', 'then', 'there', 'these', 'they', 'thing', 'this', 'through', 'very', 'want',
+					'welcome', 'well', 'were', 'what', 'when', 'where', 'which', 'while', 'will', 'with', 'within',
+					'would', 'your', 'youre');
+				
+				/* Loop through the default list of exclusions, adding them. */
 				foreach($default_list as $word) {
 					$new_excluded_word = new ExcludedWord();
 					$new_excluded_word->Word = $word;
 					$new_excluded_word->write();
 				}
 				
+				/* Let the user know we made their lives significantly easier. */
 				DB::alteration_message('Added default list of excluded words for keyword suggestions', 'created');
 			}
 		}
