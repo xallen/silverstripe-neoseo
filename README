@@ -84,3 +84,18 @@ The following variables are available to templates:
                                 (control) Array of variables for YWA
                                   (string) $Name
                                   (string) $Value
+
+Credits
+-------
+
+Developer(s):
+  Christopher H. Allen
+    <chris (at) llen (dot) co (dot) nz>
+
+Other(s):
+  Peter Nilsson (MetaManager)
+    <peter (at) kreationsbyran (dot) se>
+  Juanitou (MetaManager)
+    <unknown>
+  Martijn van Nieuwenhoven (MetaManager)
+    <marvanni (at) hotmail (dot) com>

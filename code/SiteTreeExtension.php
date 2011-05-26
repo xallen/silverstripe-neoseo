@@ -199,72 +199,12 @@
 		/**
 		 * @var int
 		 */
-		protected static $min_word_char = 3;
+		protected static $min_word_char = 4;
 
 		/**
 		 * @var string
 		 */
 		protected static $exclude_words = '';
-		
-		/**
-		 * @var bool
-		 */
-		protected static $checkbox_state = 0;
-		
-		/**
-		 * @var string
-		 */
-		protected static $checkbox_tab = '';
-		
-		/**
-		 * @var string
-		 */
-		protected static $checkbox_pos = '';
-		
-		/**
-		 * @var bool
-		 */
-		protected static $show_checkbox = 0;
-		
-		/**
-		 * @var bool
-		 */
-		protected static $show_meta_messages = 0;
-		
-		/** 
-		 * @var bool
-		 */
-		protected static $update_meta_title = 0;
-		
-		/** 
-		 * @var bool
-		 */
-		protected static $update_meta_desc = 0;
-		
-		/** 
-		 * @var int
-		 */
-		protected static $meta_desc_length = 0;
-		
-		/** 
-		 * @var bool
-		 */
-		protected static $update_meta_keys = 0;
-		
-		/**
-		 * @var bool
-		 */
-		protected static $hide_extra_meta = 0;
-		
-		/**
-		 * @var bool
-		 */
-		protected static $disable_update_popup = 0;
-		
-		/**
-		 * @var bool
-		 */
-		protected static $update_url = 0;
 		
 		/**
 		 * Sort array by count value
