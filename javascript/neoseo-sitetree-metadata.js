@@ -3,6 +3,7 @@ Behaviour.register({
 	'a#NeoSEO_KeywordAppend': {
 		onclick: function() {
 			$('Form_EditForm_MetaKeywords').value += (", " + $('NeoSEO_Keywords').innerHTML);
+			return false;
 		}
 	},
 	/* Handle replacing the keywords in MetaKeywords TextField with the suggested keywords. */
@@ -12,6 +13,7 @@ Behaviour.register({
 			if(confirm("This will replace your existing keywords. Proceed?")) {
 				$('Form_EditForm_MetaKeywords').value = $('NeoSEO_Keywords').innerHTML;
 			}
+			return false;
 		}
 	}
 });
