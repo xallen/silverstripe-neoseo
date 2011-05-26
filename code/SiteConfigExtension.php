@@ -12,7 +12,9 @@
 					'MetaKeywords' => 'Varchar(255)',
 					'ExtraMeta' => 'HTMLText',
 					'AnalyticsGoogleEnabled' => 'Boolean',
-					'AnalyticsGoogleAccountNumber' => 'Text'
+					'AnalyticsGoogleAccountNumber' => 'Text',
+					'AnalyticsYahooEnabled' => 'Boolean',
+					'AnalyticsYahooTrackingId' => 'Text'
 				)
 			);
 		}
@@ -25,14 +27,15 @@
 			
 			/* Analytics Help. */
 			$google_analytics_help = '<p>A free account is required to utilize Google Analytics. You can <a href="http://analytics.google.com/" target="_blank">register here</a>, or sign in to your existing account to retrieve your account number <a href="https://www.google.com/accounts/ServiceLogin?service=analytics" target="_blank">here</a>.</p>';
+			$yahoo_analytics_help = '<p>An account is required to utilize Yahoo! Web Analytics. You can <a href="http://web.analytics.yahoo.com/lead_form" target="_blank">register here</a>, or sign in to your existing account to retrieve your tracking Id <a href="https://login.yahoo.com/config/login_verify2?.done=https://reports.web.analytics.yahoo.com/IndexTools/servlet/IndexTools/template/Login.vm" target="_blank">here</a>. Please note that this is a premium service and comes at a cost. It would be advisable to use Google Analytics unless you have a prior arrangement with Yahoo! Web Analytics.</p>';
 		
 			/* Set up the tabs we need in advance. */
 			$fields->addFieldToTab('Root',
 				new TabSet('SearchEngineOptimization',
 					new Tab('GlobalMetadata'), 
 					new TabSet('Analytics',
-						new Tab('GoogleAnalytics', 'Google Analytics')
-						//new Tab('YahooAnalytics', 'Yahoo! Analytics'),
+						new Tab('GoogleAnalytics', 'Google Analytics'),
+						new Tab('YahooWebAnalytics', 'Yahoo! Web Analytics')
 						//new Tab('NielsenNetView', 'Nielsen NetView')
 					)
 				)
@@ -54,9 +57,10 @@
 			$fields->addFieldToTab('Root.SearchEngineOptimization.Analytics.GoogleAnalytics', new TextField('AnalyticsGoogleAccountNumber', 'Account Number (e.g. UA-12345678-9)'));
 			
 			/* Analytics: Yahoo! Analytics fields. */
-			/*$fields->addFieldToTab('Root.SearchEngineOptimization.Analytics.YahooAnalytics', new HeaderField('AnalyticsYahooHeader', 'Yahoo! Analytics', 3));
-			$fields->addFieldToTab('Root.SearchEngineOptimization.Analytics.YahooAnalytics', new CheckboxField('AnalyticsYahooEnable', 'Enable Yahoo analytics'));
-			$fields->addFieldToTab('Root.SearchEngineOptimization.Analytics.YahooAnalytics', new TextField('AnalyticsYahooAccountNumber', 'Account Number (e.g. UA-12345678-9)'));*/
+			$fields->addFieldToTab('Root.SearchEngineOptimization.Analytics.YahooWebAnalytics', new HeaderField('AnalyticsYahooHeader', 'Yahoo! Analytics', 3));
+			$fields->addFieldToTab('Root.SearchEngineOptimization.Analytics.YahooWebAnalytics', new LiteralField('AnalyticsYahooHelp', $yahoo_analytics_help));
+			$fields->addFieldToTab('Root.SearchEngineOptimization.Analytics.YahooWebAnalytics', new CheckboxField('AnalyticsYahooEnabled', 'Enable Yahoo analytics'));
+			$fields->addFieldToTab('Root.SearchEngineOptimization.Analytics.YahooWebAnalytics', new TextField('AnalyticsYahooTrackingId', 'Tracking Id (e.g. 1000111111111)'));
 			
 			/* Analytics: Nielsen NetView fields. */
 			/*$fields->addFieldToTab('Root.SearchEngineOptimization.Analytics.NielsenNetView', new HeaderField('AnalyticsNielsenHeader', 'Nielsen NetView', 3));

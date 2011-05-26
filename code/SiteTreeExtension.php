@@ -78,6 +78,23 @@
 				";
 			}
 			
+			/* Yahoo! Web Analytics. */
+			if($site_config->AnalyticsYahooEnabled and $site_config->AnalyticsYahooTrackingId) {
+				$tags .= "
+				<script type=\"text/javascript\" src=\"http://d.yimg.com/mi/ywa.js\"></script>
+				<script type=\"text/javascript\">
+				YWATracker = YWA.getTracker(\"{$site_config->AnalyticsYahooTrackingId}\");
+				YWATracker.submit();
+				</script>
+				";
+				/* This will be used in my configuration table, which is to come later. */
+				/*YWATracker.setDocumentName(\"ITEMID\");
+				YWATracker.setDocumentGroup(\"ProductView\");
+				YWATracker.setDomains(\"*.store.yahoo.net\");
+				YWATracker.setSKU(\"ITEMID\");
+				YWATracker.setAction(\"PRODUCT_VIEW\");*/
+			}
+			
 		}
 		
 		/* New/modified fields for the CMS. */
