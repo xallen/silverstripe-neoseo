@@ -107,7 +107,7 @@
 			$fields->addFieldToTab('Root.Content.Metadata', new CheckboxField('ExtraMetaAppend', 'Append global custom meta tags?'));
 			
 			/* Generate the list of suggested keywords. */
-			$suggested_keywords = $this->calculateKeywords($this->owner->Content, 4, 15, self::$exclude_words);
+			$suggested_keywords = $this->generateKeywords();
 			
 			/* Are there keyword suggestions available? */
 			if($suggested_keywords !== '') {
@@ -125,20 +125,17 @@
 			return $fields;
 		}
 		
-		/**
-		 * Extract Keywords
-		 * Returns a lowercase string with keywords ordered by occurance in content seperated with comma's
-		 * @var $string
-		 * @var $min_word_char
-		 * @var $keyword_amount
-		 * @var $exclude_words
-		 */
-		private function calculateKeywords($string = '', $min_word_char = 4, $keyword_amount = 15,  $exclude_words = '' ) {
+		private function generateKeywords() {
 			
 			/* Return if suggestion is disabled. */
 			if(!SiteConfig::current_site_config()->KeywordSuggestionEnabled) return '';
 			
-			$exclude_words = explode(", ", $exclude_words);
+			$string = $this->owner->Content;
+			$min_word_char = 4;
+			$keyword_amount = 15;
+			$exclude_words = SiteConfigExtension::excluded_word_list();
+			
+			
 			//add space before br tags so words aren't concatenated when tags are stripped
 			$string = preg_replace('/\<br(\s*)?\/?\>/i', " <br />", $string); 
 			// get rid off the htmltags
@@ -219,14 +216,6 @@
 			}
 			return preg_match_all("/\p{L}[\p{L}\p{Mn}\p{Pd}]*/u", $string, $matches);
 		}	
-
-		/**
-		 * Set the words to exlude seperate with comma
-		 * @param string $exclude_words 
-		 */
-		public function set_exclude_words($var) {
-			if ($var) self::$exclude_words = $var;
-		}
 		
 	}
 

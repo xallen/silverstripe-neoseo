@@ -113,6 +113,22 @@
 			return $fields;
 		}
 		
+		static function excluded_word_list() {
+		
+			/* Read list. */
+			$excluded_word_set = DataObject::get('ExcludedWord', '"SiteConfigID" = '.SiteConfig::current_site_config()->ID);
+			
+			/* Return blank array if list was empty. */
+			if(!$excluded_word_set->exists()) return array();
+			
+			/* Generate array of excluded words. */
+			$excluded_words = array();
+			foreach($excluded_word_set as $excluded_word) $excluded_words[] = $excluded_word->Word;
+		
+			/* Return our array of excluded words. */
+			return $excluded_words;
+		}
+		
 	}
 
 ?>
