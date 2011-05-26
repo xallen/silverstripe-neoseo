@@ -191,22 +191,7 @@
 			// return the keywords
 			return $keystring;
 		}
-		
-		/**
-		 * @var int 
-		 */
-		protected static $keyword_amount = 15;
-		
-		/**
-		 * @var int
-		 */
-		protected static $min_word_char = 4;
 
-		/**
-		 * @var string
-		 */
-		protected static $exclude_words = '';
-		
 		/**
 		 * Sort array by count value
 		 */

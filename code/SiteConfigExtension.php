@@ -15,7 +15,9 @@
 					'AnalyticsGoogleAccountNumber' => 'Text',
 					'AnalyticsYahooEnabled' => 'Boolean',
 					'AnalyticsYahooTrackingId' => 'Text',
-					'KeywordSuggestionEnabled' => 'Boolean(1)'
+					'KeywordSuggestionEnabled' => 'Boolean(1)',
+					'KeywordSuggestionQuantity' => 'Int(15)',
+					'KeywordSuggestionMinimumLength' => 'Int(4)'
 				),
 				'has_many' => array(
 					'YahooAnalyticsVariables' => 'YahooAnalyticsVariable', /* This stores a list of configurable variables for YWA. */
@@ -37,6 +39,7 @@
 			
 			/* Keyword suggestion help. */
 			$keyword_suggestion_help = '<p>You may configure the keyword suggestion feature that appears on all pages below. If you find the CMS slows down with this enabled please consider either disabling the feature or setting the maximum content length for keyword suggestion to a lower value.</p>';
+			$keyword_exclusion_help = '<p>These words will NOT be offered as keyword suggestions. The larger and more comprehensive this list the better.</p>';
 		
 			/* Set up the tabs we need in advance. */
 			$fields->addFieldToTab('Root',
@@ -64,7 +67,11 @@
 			$fields->addFieldToTab('Root.SearchEngineOptimization.KeywordSuggestion', new HeaderField('KeywordSuggestionHeader', 'Keyword Suggestion'));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.KeywordSuggestion', new LiteralField('KeywordSuggestionHelp', $keyword_suggestion_help));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.KeywordSuggestion', new CheckboxField('KeywordSuggestionEnabled', 'Enable keyword suggestion'));
-			$fields->addFieldToTab('Root.SearchEngineOptimization.KeywordSuggestion', new HeaderField('KeywordSuggestionExclusionHeader', 'Excluded words', 4));
+			$fields->addFieldToTab('Root.SearchEngineOptimization.KeywordSuggestion', new HeaderField('KeywordAdvancedOptionsHeader', 'Advanced options', 4));
+			$fields->addFieldToTab('Root.SearchEngineOptimization.KeywordSuggestion', new NumericField('KeywordSuggestionQuantity', 'Maximum keywords to suggest (Default: 15)'));
+			$fields->addFieldToTab('Root.SearchEngineOptimization.KeywordSuggestion', new NumericField('KeywordSuggestionMinimumLength', 'Minimum length of keyword to suggest (Default: 4)'));
+			$fields->addFieldToTab('Root.SearchEngineOptimization.KeywordSuggestion', new HeaderField('KeywordExclusionHeader', 'Excluded words', 4));
+			$fields->addFieldToTab('Root.SearchEngineOptimization.KeywordSuggestion', new LiteralField('KeywordExclusionHelp', $keyword_exclusion_help));
 			$excluded_words = new ComplexTableField(
 				$this,
 				'ExcludedWords',
