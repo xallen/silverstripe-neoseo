@@ -29,7 +29,8 @@ Some of NeoSEO's current features include:
   - Global metadata configuration
   - Page-by-page options to append global metadata, with extended paramaters
     when applicable.
-  - Support for Google Analytics, and Yahoo! Analytics.
+  - Support for Google Analytics, and Yahoo! Web Analytics.
+  - Advanced variable support for Yahoo! Web Analytics.
 
 Templates
 ---------
@@ -71,3 +72,14 @@ The following variables are available to templates:
                                 (boolean) Google Analytics enabled?
   $SiteConfig.AnalyticsGoogleAccountNumber
                                 (string) Google Analytics account number
+
+  [Analytics - Yahoo!]
+  
+  $SiteConfig.AnalyticsYahooEnabled
+                                (boolean) Yahoo! Web Analytics enabled?
+  $SiteConfig.AnalyticsYahooTrackingId
+                                (string) Yahoo! Web Analytics tracking Id
+  $SiteConfig.YahooAnalyticsVariables
+                                (control) Array of variables for YWA
+                                  (string) $Name
+								  (string) $Value
