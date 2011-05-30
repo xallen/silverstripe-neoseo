@@ -30,7 +30,8 @@
 		public function updateCMSFields($fields) {
 
 			/* Description for Global Metadata. */
-			$global_metadata_description = '<p>Any data entered into the fields below will be appended before the metadata specified for any page on the website. It will also be used as the default data for pages that have not yet had metadata configured.</p><p>&nbsp;</p>';
+			$global_metadata_description = '<p>Any data entered into the fields below will be appended before the metadata specified for any page on the website. It will also be used as the default data for pages that have not yet had metadata configured.</p>';
+			$global_metadata_advanced_options_description = '<p>Click a link below to force all pages on this site to the value of the applicable option.<ul><li>Append global keywords: <a id="GlobalMetadata_ForceGlobalKeywordsYes" href="#">Yes</a> or <a id="GlobalMetadata_ForceGlobalKeywordsNo" href="#">No</a>.</li><li>Append global description: <a id="GlobalMetadata_ForceGlobalDescriptionBeginning" href="#">Beginning</a>, <a id="GlobalMetadata_ForceGlobalDescriptionEnd" href="#">End</a> or <a id="GlobalMetadata_ForceGlobalDescriptionNo" href="#">No</a>.</li><li>Append global custom meta tags: <a id="GlobalMetadata_ForceExtraMetaYes" href="#">Yes</a> or <a id="GlobalMetadata_ForceExtraMetaNo" href="#">No</a>.</li></p>';
 			
 			/* Analytics help. */
 			$google_analytics_help = '<p>A free account is required to utilize Google Analytics. You can <a href="http://analytics.google.com/" target="_blank">register here</a>, or sign in to your existing account to retrieve your account number <a href="https://www.google.com/accounts/ServiceLogin?service=analytics" target="_blank">here</a>.</p>';
@@ -54,14 +55,14 @@
 				)
 			);
 		
-			/* Global Metadata: Header and description. */
+			/* Global Metadata fields. */
 			$fields->addFieldToTab('Root.SearchEngineOptimization.GlobalMetadata', new HeaderField('GlobalMetadataHeader', _t('SiteConfig.GlobalMetadataHeader', 'Global Metadata')));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.GlobalMetadata', new LiteralField('GlobalMetadataDescription', _t('SiteConfig.GlobalMetadataDescription', $global_metadata_description)));
-			
-			/* Global Metadata: Main form. */
 			$fields->addFieldToTab('Root.SearchEngineOptimization.GlobalMetadata', new TextareaField('MetaKeywords', _t('SiteConfig.MetaKeywords', 'Keywords'), 1));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.GlobalMetadata', new TextareaField('MetaDescription', _t('SiteConfig.MetaDescription', 'Description')));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.GlobalMetadata', new TextareaField('ExtraMeta', _t('SiteConfig.ExtraMeta', 'Custom Meta Tags')));
+			$fields->addFieldToTab('Root.SearchEngineOptimization.GlobalMetadata', new HeaderField('GlobalMetadataAdvancedOptionsHeader', 'Advanced options', 4));
+			$fields->addFieldToTab('Root.SearchEngineOptimization.GlobalMetadata', new LiteralField('GlobalMetadataAdvancedOptionsDescription', $global_metadata_advanced_options_description));
 			
 			/* Keyword Suggestion fields. */
 			$fields->addFieldToTab('Root.SearchEngineOptimization.KeywordSuggestion', new HeaderField('KeywordSuggestionHeader', 'Keyword Suggestion'));
@@ -109,6 +110,9 @@
 			/*$fields->addFieldToTab('Root.SearchEngineOptimization.Analytics.NielsenNetView', new HeaderField('AnalyticsNielsenHeader', 'Nielsen NetView', 3));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.Analytics.NielsenNetView', new CheckboxField('AnalyticsNielsenEnable', 'Enable Nielsen analytics'));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.Analytics.NielsenNetView', new TextField('AnalyticsNielsenAccountNumber', 'Account Number (e.g. UA-12345678-9)'));*/
+			
+			/* Load JS required for some of the additions to the CMS. */
+			Requirements::javascript('neoseo/javascript/neoseo-siteconfig-global-metadata.js');
 			
 			return $fields;
 		}
