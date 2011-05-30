@@ -1,10 +1,23 @@
+var _AJAX_WORKING = false;
+
+function showWorkingMessage() {
+	_AJAX_WORKING = true;
+	statusMessage('Working... Please be patient.', '', true);
+}
+
 Behaviour.register({
 	/* Force all pages to use global keywords. */
 	'a#GlobalMetadata_ForceGlobalKeywordsYes': {
 		onclick: function() {
 			/* Warn the user and give them a way out. */
 			if(confirm("This will force every page to use the global keywords. Proceed?")) {
-				alert("MetaKeywords(YES). Functionality pending!");
+				showWorkingMessage();
+				new Ajax.Request('admin/force_append_setting?name=test_test_01', {
+					method: 'get',
+					onSuccess: function(transport) {
+						statusMessage('Test ok.', 'good');
+					}
+				});
 			}
 			return false;
 		}
@@ -14,7 +27,7 @@ Behaviour.register({
 		onclick: function() {
 			/* Warn the user and give them a way out. */
 			if(confirm("This will force every page to stop using global keywords. Proceed?")) {
-				alert("MetaKeywords(NO). Functionality pending!");
+				showWorkingMessage();
 			}
 			return false;
 		}
@@ -23,7 +36,7 @@ Behaviour.register({
 		onclick: function() {
 			/* Warn the user and give them a way out. */
 			if(confirm("This will force every page to use the global keywords. Proceed?")) {
-				alert("MetaDescription(YES). Functionality pending!");
+				showWorkingMessage();
 			}
 			return false;
 		}
@@ -32,7 +45,7 @@ Behaviour.register({
 		onclick: function() {
 			/* Warn the user and give them a way out. */
 			if(confirm("This will force every page to use the global keywords. Proceed?")) {
-				alert("MetaDescription(END). Functionality pending!");
+				showWorkingMessage();
 			}
 			return false;
 		}
@@ -41,7 +54,7 @@ Behaviour.register({
 		onclick: function() {
 			/* Warn the user and give them a way out. */
 			if(confirm("This will force every page to use the global keywords. Proceed?")) {
-				alert("MetaDescription(NO). Functionality pending!");
+				showWorkingMessage();
 			}
 			return false;
 		}
@@ -50,7 +63,7 @@ Behaviour.register({
 		onclick: function() {
 			/* Warn the user and give them a way out. */
 			if(confirm("This will force every page to use the global keywords. Proceed?")) {
-				alert("ExtraMeta(YES). Functionality pending!");
+				showWorkingMessage();
 			}
 			return false;
 		}
@@ -59,7 +72,7 @@ Behaviour.register({
 		onclick: function() {
 			/* Warn the user and give them a way out. */
 			if(confirm("This will force every page to use the global keywords. Proceed?")) {
-				alert("ExtraMeta(NO). Functionality pending!");
+				showWorkingMessage();
 			}
 			return false;
 		}
