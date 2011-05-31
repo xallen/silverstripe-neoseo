@@ -2,7 +2,7 @@
 
 global $lang;
 
-/* Left as a sample. */
+/* Left as a sample.
 $lang['en_US']['AssetAdmin']['CHOOSEFILE'] = 'Choose file: ';
 $lang['en_US']['AssetAdmin']['DELETEDX'] = 'Deleted %s files.%s';
 $lang['en_US']['AssetAdmin']['FILESREADY'] = 'Files ready to upload:';
