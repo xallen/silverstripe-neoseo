@@ -44,7 +44,7 @@
 			
 			/* Social Networking help. */
 			$social_networking_twitter_help = '<p>Your website can automate the \'tweet\' of recent updates when publishing a page by linking it with your Twitter account. You will need to <a href="https://dev.twitter.com/apps/new" target="_blank">register your website</a> as an application. You can then retrieve your <strong>Consumey Key</strong> and <strong>Consumer Secret</strong> by visiting the application you just registered under your <a href="https://dev.twitter.com/apps" target="_blank">list of registered applications</a>. Finally, you will need to provide the <strong>Access Token</strong> and <strong>Access Token Secret</strong> for your Twitter account via the "My Access Token" button on your application page.</p>';
-			$social_networking_twitter_content_help = '<p>You can configure the content of your tweet below. <strong>%URL%</strong> will be replaced with the URL of the published page.</p>';
+			$social_networking_twitter_content_help = '<p>You can configure the content of your tweet below. The following variables are available and will be replaced dynamically. <table><tr><td><strong>%PageTitle%</strong></td><td>The title of the published page.</td></tr><tr><td><strong>%BaseURL%</strong></td><td>The base URL of your website.</td></tr><tr><td><strong>%FullURL%</strong></td><td>The full URL of the published page.</td></tr></table></p>';
 			
 			/* Analytics help. */
 			$google_analytics_help = '<p>A free account is required to utilize Google Analytics. You can <a href="http://analytics.google.com/" target="_blank">register here</a>, or sign in to your existing account to retrieve your account number <a href="https://www.google.com/accounts/ServiceLogin?service=analytics" target="_blank">here</a>.</p>';
@@ -85,7 +85,7 @@
 			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new HeaderField('SocialNetworkingTwitterHeader', 'Twitter'));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new LiteralField('SocialNetworkingTwitterHelp', $social_networking_twitter_help));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new CheckboxField('SocialNetworkingTwitterEnabled', 'Enable Twitter support'));
-			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new CheckboxField('SocialNetworkingTwitterPromptEnabled', 'Prompt me before tweeting after Publishing a page (highly recommended)'));
+			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new CheckboxField('SocialNetworkingTwitterPromptEnabled', 'Prompt me before tweeting after publishing a page (highly recommended)'));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new HeaderField('SocialNetworkingTwitterContentsHeader', 'Tweet content', 4));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new LiteralField('SocialNetworkingTwitterContentHelp', $social_networking_twitter_content_help));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new TextareaField('SocialNetworkingTwitterContent', 'Content'));

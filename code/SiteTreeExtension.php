@@ -41,6 +41,7 @@
 
 			$charset = ContentNegotiator::get_encoding();
 			$tags .= "<meta http-equiv=\"Content-type\" content=\"text/html; charset=$charset\" />\n";
+			// TODO: BUGFIX: This doesn't work all the time. Staging problem?
 			if($this->owner->MetaKeywords || ($site_config->MetaKeywords and $this->owner->MetaKeywordsAppend)) {
 				$keywords = array();
 				if($site_config->MetaKeywords and $this->owner->MetaKeywordsAppend) $keywords[] = $site_config->MetaKeywords;
@@ -142,7 +143,19 @@
 			));
 
 			/* Chirp chirp chirp. */
-			$primed_content = str_replace('%URL%', BASE_URL.$this->owner->Link(), SiteConfig::current_site_config()->SocialNetworkingTwitterContent);
+			$primed_content = str_replace(
+				array( /* Needles. */
+					'%FullURL%',
+					'%BaseURL%',
+					'%PageTitle%'
+				),
+				array( /* Thread. */
+					Director::protocolAndHost().$this->owner->Link(),
+					Director::absoluteBaseURL(),
+					$this->owner->Title
+				),
+				SiteConfig::current_site_config()->SocialNetworkingTwitterContent /* Haystack: tweet content. */
+			);
 			$tmhOAuth->request('POST', $tmhOAuth->url('1/statuses/update'), array(
 			  'status' => $primed_content
 			));
@@ -251,9 +264,24 @@
 			return preg_match_all("/\p{L}[\p{L}\p{Mn}\p{Pd}]*/u", $string, $matches);
 		}
 		
+		function onAfterSave() {
+			if (isset($urlParams['hype']) && $urlParams['hype'] == 1) {
+				echo "HYPE LOL";
+			}
+		}
+		
 		/* We want to send a tweet on publish. */
 		function onAfterPublish() {
-			$this->tweet();
+			//$this->tweet();
+		}
+		
+		/* We need to add a button to handle social networking reporting in the form of a 'hype' button. */
+		function updateCMSActions(&$actions) {
+			
+			if($this->owner->canPublish() && !$this->owner->IsDeletedFromStage) {
+				/* Save, Publish and Hype! */
+				$actions->push(new FormAction('hype', _t('SiteTree.BUTTONSAVEPUBLISHHYPE', 'Save, Publish and Hype')));
+			}
 		}
 		
 	}
