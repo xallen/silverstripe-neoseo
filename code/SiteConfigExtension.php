@@ -19,6 +19,7 @@
 					'KeywordSuggestionQuantity' => 'Int(15)',
 					'KeywordSuggestionMinimumLength' => 'Int(4)',
 					'SocialNetworkingTwitterEnabled' => 'Boolean(0)',
+					'SocialNetworkingTwitterUpdateDelay' => 'Int(720)',
 					'SocialNetworkingTwitterConsumerKey' => 'Varchar(64)',
 					'SocialNetworkingTwitterConsumerSecret' => 'Varchar(64)',
 					'SocialNetworkingTwitterUserToken' => 'Varchar(64)',
@@ -80,6 +81,7 @@
 			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new HeaderField('SocialNetworkingTwitterHeader', 'Twitter'));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new LiteralField('SocialNetworkingTwitterHelp', $social_networking_twitter_help));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new CheckboxField('SocialNetworkingTwitterEnabled', 'Enable auto-tweeting of recent changes'));
+			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new TextField('SocialNetworkingTwitterUpdateDelay', 'Minimum time between tweets to prevent \'spam posts\' (minutes, default: 720 - 10 hours)'));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new TextField('SocialNetworkingTwitterConsumerKey', 'Consumer Key'));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new TextField('SocialNetworkingTwitterConsumerSecret', 'Consumer Secret'));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new TextField('SocialNetworkingTwitterUserToken', 'User Token'));
@@ -152,28 +154,6 @@
 		
 			/* Return our array of excluded words. */
 			return $excluded_words;
-		}
-		
-		static function tweet() {
-			
-			/* We're using tmhOAuth. */
-			require_once BASE_PATH.'/neoseo/thirdparty/tmhOAuth/tmhOAuth.php';
-			
-			/* Set authentication information from the database. */
-			$tmhOAuth = new tmhOAuth(array(
-			  'consumer_key'    => SiteConfig::current_site_config()->SocialNetworkingTwitterConsumerKey,
-			  'consumer_secret' => SiteConfig::current_site_config()->SocialNetworkingTwitterConsumerSecret,
-			  'user_token'      => SiteConfig::current_site_config()->SocialNetworkingTwitterUserToken,
-			  'user_secret'     => SiteConfig::current_site_config()->SocialNetworkingTwitterUserSecret
-			));
-
-			/* Chirp chirp chirp. */
-			$tmhOAuth->request('POST', $tmhOAuth->url('1/statuses/update'), array(
-			  'status' => 'I just updated my website! Check it out at: http://testing.com'
-			));
-			
-			/* Report success if response code is 200, else failure. */
-			return ($tmhOAuth->response['code'] == 200) ? true : false;
 		}
 		
 		function onBeforeWrite() {

@@ -10,7 +10,8 @@
 				'db' => array(
 					'MetaKeywordsAppend' => 'Boolean(1)',
 					'MetaDescriptionAppend' => 'Enum("Beginning, End, No")',
-					'ExtraMetaAppend' => 'Boolean(1)'
+					'ExtraMetaAppend' => 'Boolean(1)',
+					'LastTwitterUpdate' => 'Datetime'
 				),
 				/* Default database field values. */
 				'defaults' => array(
@@ -125,6 +126,31 @@
 			return $fields;
 		}
 		
+		static function tweet() {
+			
+			/* If Twitter isn't enabled, bail. */
+			if(!SiteConfig::current_site_config()->SocialNetworkingTwitterEnabled) return;
+			
+			/* We're using tmhOAuth. */
+			require_once BASE_PATH.'/neoseo/thirdparty/tmhOAuth/tmhOAuth.php';
+			
+			/* Set authentication information from the database. */
+			$tmhOAuth = new tmhOAuth(array(
+			  'consumer_key'    => SiteConfig::current_site_config()->SocialNetworkingTwitterConsumerKey,
+			  'consumer_secret' => SiteConfig::current_site_config()->SocialNetworkingTwitterConsumerSecret,
+			  'user_token'      => SiteConfig::current_site_config()->SocialNetworkingTwitterUserToken,
+			  'user_secret'     => SiteConfig::current_site_config()->SocialNetworkingTwitterUserSecret
+			));
+
+			/* Chirp chirp chirp. */
+			$tmhOAuth->request('POST', $tmhOAuth->url('1/statuses/update'), array(
+			  'status' => 'I just updated my website! Check it out at: http://testing.com'
+			));
+			
+			/* Report success if response code is 200, else failure. */
+			return ($tmhOAuth->response['code'] == 200) ? true : false;
+		}
+		
 		private function generateKeywords() {
 			
 			/* Return if suggestion is disabled. */
@@ -222,8 +248,9 @@
 			return preg_match_all("/\p{L}[\p{L}\p{Mn}\p{Pd}]*/u", $string, $matches);
 		}
 		
+		/* We want to send a tweet on publish. */
 		function onAfterPublish() {
-			SiteConfigExtension::tweet();
+			self::tweet();
 		}
 		
 	}
