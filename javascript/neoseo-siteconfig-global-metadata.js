@@ -1,81 +1,29 @@
-var _AJAX_WORKING = false;
-
-function showWorkingMessage() {
-	_AJAX_WORKING = true;
-	statusMessage('Working... Please be patient.', '', true);
-}
-
 Behaviour.register({
 	/* Force all pages to use global keywords. */
-	'a#GlobalMetadata_ForceGlobalKeywordsYes': {
+	'#GlobalMetadata_Force a': {
 		onclick: function() {
+		
 			/* Warn the user and give them a way out. */
-			if(confirm("This will force every page to use the global keywords. Proceed?")) {
-				showWorkingMessage();
-				new Ajax.Request('admin/force_append_setting?name=test_test_01', {
-					method: 'get',
-					onSuccess: function(transport) {
-						statusMessage('Test ok.', 'good');
-					}
-				});
-			}
+			if(!confirm("This will force every page to use this setting. Proceed?")) return false;
+				
+			/* Update the user's interface. */
+			statusMessage('Working... Please be patient.', '', true);
+			
+			/* Split class list to obtain the paramaters we require for submission. */
+			var paramaters = this.className.split(' ');
+			
+			/* Handle the actual submission. */
+			new Ajax.Request('/admin/force_append_setting', {
+				method: 'post',
+				postBody:  'name=' + paramaters[0] + '&value=' + paramaters[1],
+				onSuccess: function(transport) {
+					
+					/* Update the user's interface with the result. */
+					eval(transport.responseText);
+				}
+			});
+				
 			return false;
 		}
-	},
-	/* Force all pages to NOT use global keywords. */
-	'a#GlobalMetadata_ForceGlobalKeywordsNo': {
-		onclick: function() {
-			/* Warn the user and give them a way out. */
-			if(confirm("This will force every page to stop using global keywords. Proceed?")) {
-				showWorkingMessage();
-			}
-			return false;
-		}
-	},
-	'a#GlobalMetadata_ForceGlobalDescriptionBeginning': {
-		onclick: function() {
-			/* Warn the user and give them a way out. */
-			if(confirm("This will force every page to use the global keywords. Proceed?")) {
-				showWorkingMessage();
-			}
-			return false;
-		}
-	},
-	'a#GlobalMetadata_ForceGlobalDescriptionEnd': {
-		onclick: function() {
-			/* Warn the user and give them a way out. */
-			if(confirm("This will force every page to use the global keywords. Proceed?")) {
-				showWorkingMessage();
-			}
-			return false;
-		}
-	},
-	'a#GlobalMetadata_ForceGlobalDescriptionNo': {
-		onclick: function() {
-			/* Warn the user and give them a way out. */
-			if(confirm("This will force every page to use the global keywords. Proceed?")) {
-				showWorkingMessage();
-			}
-			return false;
-		}
-	},
-	'a#GlobalMetadata_ForceExtraMetaYes': {
-		onclick: function() {
-			/* Warn the user and give them a way out. */
-			if(confirm("This will force every page to use the global keywords. Proceed?")) {
-				showWorkingMessage();
-			}
-			return false;
-		}
-	},
-	'a#GlobalMetadata_ForceExtraMetaNo': {
-		onclick: function() {
-			/* Warn the user and give them a way out. */
-			if(confirm("This will force every page to use the global keywords. Proceed?")) {
-				showWorkingMessage();
-			}
-			return false;
-		}
-	},
-	
+	}
 });
