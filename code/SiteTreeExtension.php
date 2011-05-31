@@ -10,12 +10,11 @@
 				'db' => array(
 					'MetaKeywordsAppend' => 'Boolean(1)',
 					'MetaDescriptionAppend' => 'Enum("Beginning, End, No")',
-					'ExtraMetaAppend' => 'Boolean(1)',
-					'LastTwitterUpdate' => 'Datetime'
+					'ExtraMetaAppend' => 'Boolean(1)'
 				),
 				/* Default database field values. */
 				'defaults' => array(
-					'MetaDescriptionAppend' => 'Beginning',
+					'MetaDescriptionAppend' => 'Beginning'
 				)
 			);
 		}
@@ -126,7 +125,7 @@
 			return $fields;
 		}
 		
-		static function tweet() {
+		private function tweet() {
 			
 			/* If Twitter isn't enabled, bail. */
 			if(!SiteConfig::current_site_config()->SocialNetworkingTwitterEnabled) return;
@@ -144,11 +143,14 @@
 
 			/* Chirp chirp chirp. */
 			$tmhOAuth->request('POST', $tmhOAuth->url('1/statuses/update'), array(
-			  'status' => 'I just updated my website! Check it out at: http://testing.com'
+			  'status' => 'I just updated my website. Take a look here:'
 			));
 			
-			/* Report success if response code is 200, else failure. */
-			return ($tmhOAuth->response['code'] == 200) ? true : false;
+			/* Success? */
+			if($tmhOAuth->response['code'] == 200) return true;
+			
+			/* If we got to here, the tweet failed. */
+			return false;
 		}
 		
 		private function generateKeywords() {
@@ -250,7 +252,7 @@
 		
 		/* We want to send a tweet on publish. */
 		function onAfterPublish() {
-			self::tweet();
+			$this->tweet();
 		}
 		
 	}

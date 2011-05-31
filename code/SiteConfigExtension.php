@@ -19,7 +19,8 @@
 					'KeywordSuggestionQuantity' => 'Int(15)',
 					'KeywordSuggestionMinimumLength' => 'Int(4)',
 					'SocialNetworkingTwitterEnabled' => 'Boolean(0)',
-					'SocialNetworkingTwitterUpdateDelay' => 'Int(720)',
+					'SocialNetworkingTwitterPromptEnabled' => 'Boolean(1)',
+					'SocialNetworkingTwitterContent' => 'Varchar(140)',
 					'SocialNetworkingTwitterConsumerKey' => 'Varchar(64)',
 					'SocialNetworkingTwitterConsumerSecret' => 'Varchar(64)',
 					'SocialNetworkingTwitterUserToken' => 'Varchar(64)',
@@ -40,7 +41,8 @@
 			$global_metadata_advanced_options_description = '<p>Click a link below to force all pages on this site to the value of the applicable option.<ul id="GlobalMetadata_Force"><li>Append global keywords: <a class="MetaKeywords Yes" href="#">Yes</a> or <a class="MetaKeywords No" href="#">No</a>.</li><li>Append global description: <a class="MetaDescription Beginning" href="#">Beginning</a>, <a class="MetaDescription End" href="#">End</a> or <a class="MetaDescription No" href="#">No</a>.</li><li>Append global custom meta tags: <a class="ExtraMeta Yes" href="#">Yes</a> or <a class="ExtraMeta No" href="#">No</a>.</li></p>';
 			
 			/* Social Networking help. */
-			$social_networking_twitter_help = '<p>Your website can automate the \'tweet\' of recent updates by linking it with your Twitter account. You will need to <a href="https://dev.twitter.com/apps/new" target="_blank">register your website</a> as an application. You can then retrieve your <strong>Consumey Key</strong> and <strong>Consumer Secret</strong> by visiting the application you just registered under your <a href="https://dev.twitter.com/apps" target="_blank">list of registered applications</a>. Finally, you will need to provide the <strong>Access Token</strong> and <strong>Access Token Secret</strong> for your Twitter account via the "My Access Token" button on your application page.</p>';
+			$social_networking_twitter_help = '<p>Your website can automate the \'tweet\' of recent updates when publishing a page by linking it with your Twitter account. You will need to <a href="https://dev.twitter.com/apps/new" target="_blank">register your website</a> as an application. You can then retrieve your <strong>Consumey Key</strong> and <strong>Consumer Secret</strong> by visiting the application you just registered under your <a href="https://dev.twitter.com/apps" target="_blank">list of registered applications</a>. Finally, you will need to provide the <strong>Access Token</strong> and <strong>Access Token Secret</strong> for your Twitter account via the "My Access Token" button on your application page.</p><p><strong>NOTE:</strong> Twitter will automatically attempt to filter multiple, similiar posts but I still highly recommend leaving <strong>Prompt me before tweeting</strong> checked.</p>';
+			$social_networking_twitter_content_help = '<p>You can configure the content of your tweet below. <strong>%URL%</strong> will be replaced with the URL of the published page.</p>';
 			
 			/* Analytics help. */
 			$google_analytics_help = '<p>A free account is required to utilize Google Analytics. You can <a href="http://analytics.google.com/" target="_blank">register here</a>, or sign in to your existing account to retrieve your account number <a href="https://www.google.com/accounts/ServiceLogin?service=analytics" target="_blank">here</a>.</p>';
@@ -80,8 +82,12 @@
 			/* Social Networking: Twitter fields. */
 			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new HeaderField('SocialNetworkingTwitterHeader', 'Twitter'));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new LiteralField('SocialNetworkingTwitterHelp', $social_networking_twitter_help));
-			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new CheckboxField('SocialNetworkingTwitterEnabled', 'Enable auto-tweeting of recent changes'));
-			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new TextField('SocialNetworkingTwitterUpdateDelay', 'Minimum time between tweets to prevent \'spam posts\' (minutes, default: 720 - 10 hours)'));
+			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new CheckboxField('SocialNetworkingTwitterEnabled', 'Enable Twitter support'));
+			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new CheckboxField('SocialNetworkingTwitterPromptEnabled', 'Prompt me before tweeting after Publishing a page (highly recommended)'));
+			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new HeaderField('SocialNetworkingTwitterContentsHeader', 'Tweet content', 4));
+			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new LiteralField('SocialNetworkingTwitterContentHelp', $social_networking_twitter_content_help));
+			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new TextareaField('SocialNetworkingTwitterContent', 'Content'));
+			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new HeaderField('SocialNetworkingTwitterAuthorizationHeader', 'Authorization', 4));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new TextField('SocialNetworkingTwitterConsumerKey', 'Consumer Key'));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new TextField('SocialNetworkingTwitterConsumerSecret', 'Consumer Secret'));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new TextField('SocialNetworkingTwitterUserToken', 'User Token'));
