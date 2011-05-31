@@ -31,6 +31,8 @@
 					'ExcludedWords' => 'ExcludedWord'
 				)
 			);
+			
+			//I just updated a page on my website. Take a look here: %URL%
 		}
 
 		/* New/modified fields for the CMS. */

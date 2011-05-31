@@ -143,7 +143,7 @@
 
 			/* Chirp chirp chirp. */
 			$tmhOAuth->request('POST', $tmhOAuth->url('1/statuses/update'), array(
-			  'status' => 'I just updated my website. Take a look here:'
+			  'status' => str_replace('%URL%', $this->owner->Link(), SiteConfig::current_site_config()->SocialNetworkingTwitterContent)
 			));
 			
 			/* Success? */
