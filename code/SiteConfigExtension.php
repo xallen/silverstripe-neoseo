@@ -17,7 +17,12 @@
 					'AnalyticsYahooTrackingId' => 'Text',
 					'KeywordSuggestionEnabled' => 'Boolean(1)',
 					'KeywordSuggestionQuantity' => 'Int(15)',
-					'KeywordSuggestionMinimumLength' => 'Int(4)'
+					'KeywordSuggestionMinimumLength' => 'Int(4)',
+					'SocialNetworkingTwitterEnabled' => 'Boolean(0)',
+					'SocialNetworkingTwitterConsumerKey' => 'Varchar(64)',
+					'SocialNetworkingTwitterConsumerSecret' => 'Varchar(64)',
+					'SocialNetworkingTwitterUserToken' => 'Varchar(64)',
+					'SocialNetworkingTwitterUserSecret' => 'Varchar(64)'
 				),
 				'has_many' => array(
 					'YahooAnalyticsVariables' => 'YahooAnalyticsVariable', /* This stores a list of configurable variables for YWA. */
@@ -46,6 +51,9 @@
 			/* Description for Global Metadata. */
 			$global_metadata_description = '<p>Any data entered into the fields below will be appended before the metadata specified for any page on the website. It will also be used as the default data for pages that have not yet had metadata configured.</p>';
 			$global_metadata_advanced_options_description = '<p>Click a link below to force all pages on this site to the value of the applicable option.<ul id="GlobalMetadata_Force"><li>Append global keywords: <a class="MetaKeywords Yes" href="#">Yes</a> or <a class="MetaKeywords No" href="#">No</a>.</li><li>Append global description: <a class="MetaDescription Beginning" href="#">Beginning</a>, <a class="MetaDescription End" href="#">End</a> or <a class="MetaDescription No" href="#">No</a>.</li><li>Append global custom meta tags: <a class="ExtraMeta Yes" href="#">Yes</a> or <a class="ExtraMeta No" href="#">No</a>.</li></p>';
+			
+			/* Social Networking help. */
+			$social_networking_twitter_help = '<p>Your website can automate the \'tweet\' of recent updates by linking it with your Twitter account. You will need to <a href="https://dev.twitter.com/apps/new" target="_blank">register your website</a> as an application. You can then retrieve your <strong>Consumey Key</strong> and <strong>Consumer Secret</strong> by visiting the application you just registered under your <a href="https://dev.twitter.com/apps" target="_blank">list of registered applications</a>. Finally, you will need to provide the <strong>Access Token</strong> and <strong>Access Token Secret</strong> for your Twitter account via the "My Access Token" button on your application page.</p>';
 			
 			/* Analytics help. */
 			$google_analytics_help = '<p>A free account is required to utilize Google Analytics. You can <a href="http://analytics.google.com/" target="_blank">register here</a>, or sign in to your existing account to retrieve your account number <a href="https://www.google.com/accounts/ServiceLogin?service=analytics" target="_blank">here</a>.</p>';
@@ -81,6 +89,15 @@
 			$fields->addFieldToTab('Root.SearchEngineOptimization.GlobalMetadata', new TextareaField('ExtraMeta', _t('SiteConfig.ExtraMeta', 'Custom Meta Tags')));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.GlobalMetadata', new HeaderField('GlobalMetadataAdvancedOptionsHeader', 'Advanced options', 4));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.GlobalMetadata', new LiteralField('GlobalMetadataAdvancedOptionsDescription', $global_metadata_advanced_options_description));
+			
+			/* Social Networking: Twitter fields. */
+			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new HeaderField('SocialNetworkingTwitterHeader', 'Twitter'));
+			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new LiteralField('SocialNetworkingTwitterHelp', $social_networking_twitter_help));
+			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new CheckboxField('SocialNetworkingTwitterEnabled', 'Enable auto-tweeting of recent changes'));
+			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new TextField('SocialNetworkingTwitterConsumerKey', 'Consumer Key'));
+			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new TextField('SocialNetworkingTwitterConsumerSecret', 'Consumer Secret'));
+			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new TextField('SocialNetworkingTwitterUserToken', 'User Token'));
+			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new TextField('SocialNetworkingTwitterUserSecret', 'User Secret'));
 			
 			/* Keyword Suggestion fields. */
 			$fields->addFieldToTab('Root.SearchEngineOptimization.KeywordSuggestion', new HeaderField('KeywordSuggestionHeader', 'Keyword Suggestion'));
