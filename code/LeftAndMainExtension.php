@@ -18,7 +18,8 @@
 					return 'statusMessage("Global metadata keywords have been '.(($value == 'Yes') ? 'enabled' : 'disabled').' for all pages.", "good");';
 				case 'MetaDescription':
 				case 'ExtraMeta':
-					break;
+					DB::query('UPDATE `SiteTree` SET `ExtraMetaAppend` = '.(($value == 'Yes') ? 1 : 0).' WHERE `ID` = '.SiteConfig::current_site_config()->ID);
+					return 'statusMessage("Global custom metadata tags have been '.(($value == 'Yes') ? 'enabled' : 'disabled').' for all pages.", "good");';
 			}
 			
 			/* If we haven't returned before this the request must have been bad. */
