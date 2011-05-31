@@ -29,6 +29,20 @@
 		/* New/modified fields for the CMS. */
 		public function updateCMSFields($fields) {
 
+			/*require_once BASE_PATH.'/neoseo/thirdparty/tmhOAuth/tmhOAuth.php';
+			
+			/* keys here */
+
+			/*$tmhOAuth->request('POST', $tmhOAuth->url('1/statuses/update'), array(
+			  'status' => 'I just updated my page on'
+			));
+
+			if ($tmhOAuth->response['code'] == 200) {
+			  $tmhOAuth->pr(json_decode($tmhOAuth->response['response']));
+			} else {
+			  $tmhOAuth->pr(htmlentities($tmhOAuth->response['response']));
+			}*/
+		
 			/* Description for Global Metadata. */
 			$global_metadata_description = '<p>Any data entered into the fields below will be appended before the metadata specified for any page on the website. It will also be used as the default data for pages that have not yet had metadata configured.</p>';
 			$global_metadata_advanced_options_description = '<p>Click a link below to force all pages on this site to the value of the applicable option.<ul id="GlobalMetadata_Force"><li>Append global keywords: <a class="MetaKeywords Yes" href="#">Yes</a> or <a class="MetaKeywords No" href="#">No</a>.</li><li>Append global description: <a class="MetaDescription Beginning" href="#">Beginning</a>, <a class="MetaDescription End" href="#">End</a> or <a class="MetaDescription No" href="#">No</a>.</li><li>Append global custom meta tags: <a class="ExtraMeta Yes" href="#">Yes</a> or <a class="ExtraMeta No" href="#">No</a>.</li></p>';
@@ -46,6 +60,10 @@
 			$fields->addFieldToTab('Root',
 				new TabSet('SearchEngineOptimization',
 					new Tab('GlobalMetadata'),
+					new TabSet('SocialNetworking',
+						new Tab('Twitter')
+						//new Tab('Facebook')
+					),
 					new Tab('KeywordSuggestion'),
 					new TabSet('Analytics',
 						new Tab('GoogleAnalytics', 'Google Analytics'),
