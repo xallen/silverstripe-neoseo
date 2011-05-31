@@ -220,7 +220,11 @@
 				return $result;
 			}
 			return preg_match_all("/\p{L}[\p{L}\p{Mn}\p{Pd}]*/u", $string, $matches);
-		}	
+		}
+		
+		function onAfterPublish() {
+			SiteConfigExtension::tweet();
+		}
 		
 	}
 

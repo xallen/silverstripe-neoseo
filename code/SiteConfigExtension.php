@@ -33,20 +33,6 @@
 
 		/* New/modified fields for the CMS. */
 		public function updateCMSFields($fields) {
-
-			/*require_once BASE_PATH.'/neoseo/thirdparty/tmhOAuth/tmhOAuth.php';
-			
-			/* keys here */
-
-			/*$tmhOAuth->request('POST', $tmhOAuth->url('1/statuses/update'), array(
-			  'status' => 'I just updated my page on'
-			));
-
-			if ($tmhOAuth->response['code'] == 200) {
-			  $tmhOAuth->pr(json_decode($tmhOAuth->response['response']));
-			} else {
-			  $tmhOAuth->pr(htmlentities($tmhOAuth->response['response']));
-			}*/
 		
 			/* Description for Global Metadata. */
 			$global_metadata_description = '<p>Any data entered into the fields below will be appended before the metadata specified for any page on the website. It will also be used as the default data for pages that have not yet had metadata configured.</p>';
@@ -166,6 +152,28 @@
 		
 			/* Return our array of excluded words. */
 			return $excluded_words;
+		}
+		
+		static function tweet() {
+			
+			/* We're using tmhOAuth. */
+			require_once BASE_PATH.'/neoseo/thirdparty/tmhOAuth/tmhOAuth.php';
+			
+			/* Set authentication information from the database. */
+			$tmhOAuth = new tmhOAuth(array(
+			  'consumer_key'    => SiteConfig::current_site_config()->SocialNetworkingTwitterConsumerKey,
+			  'consumer_secret' => SiteConfig::current_site_config()->SocialNetworkingTwitterConsumerSecret,
+			  'user_token'      => SiteConfig::current_site_config()->SocialNetworkingTwitterUserToken,
+			  'user_secret'     => SiteConfig::current_site_config()->SocialNetworkingTwitterUserSecret
+			));
+
+			/* Chirp chirp chirp. */
+			$tmhOAuth->request('POST', $tmhOAuth->url('1/statuses/update'), array(
+			  'status' => 'I just updated my website! Check it out at: http://testing.com'
+			));
+			
+			/* Report success if response code is 200, else failure. */
+			return ($tmhOAuth->response['code'] == 200) ? true : false;
 		}
 		
 		function onBeforeWrite() {
