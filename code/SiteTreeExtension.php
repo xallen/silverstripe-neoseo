@@ -142,8 +142,9 @@
 			));
 
 			/* Chirp chirp chirp. */
+			$primed_content = str_replace('%URL%', BASE_URL.$this->owner->Link(), SiteConfig::current_site_config()->SocialNetworkingTwitterContent);
 			$tmhOAuth->request('POST', $tmhOAuth->url('1/statuses/update'), array(
-			  'status' => str_replace('%URL%', $this->owner->Link(), SiteConfig::current_site_config()->SocialNetworkingTwitterContent)
+			  'status' => $primed_content
 			));
 			
 			/* Success? */
