@@ -16,13 +16,16 @@
 			switch($name) {
 				case 'MetaKeywords':
 					DB::query('UPDATE `SiteTree` SET `MetaKeywordsAppend` = '.(($value == 'Yes') ? 1 : 0));
+					DB::query('UPDATE `SiteTree_Live` SET `MetaKeywordsAppend` = '.(($value == 'Yes') ? 1 : 0));
 					return 'statusMessage("Global metadata keywords have been '.(($value == 'Yes') ? 'enabled' : 'disabled').' for all pages.", "good");';
 				case 'MetaDescription':
 					if($value != 'Beginning' and $value != 'End') $value = 'No'; /* Make sure the data is safe. If it isn't Beginning or End it is set to No. */
 					DB::query('UPDATE `SiteTree` SET `MetaDescriptionAppend` = \''.$value.'\'');
+					DB::query('UPDATE `SiteTree_Live` SET `MetaDescriptionAppend` = \''.$value.'\'');
 					return 'statusMessage("Global metadata description has been '.(($value == 'No') ? 'disabled' : 'enabled').' on all pages.", "good");';
 				case 'ExtraMeta':
 					DB::query('UPDATE `SiteTree` SET `ExtraMetaAppend` = '.(($value == 'Yes') ? 1 : 0));
+					DB::query('UPDATE `SiteTree_Live` SET `ExtraMetaAppend` = '.(($value == 'Yes') ? 1 : 0));
 					return 'statusMessage("Global custom metadata tags have been '.(($value == 'Yes') ? 'enabled' : 'disabled').' for all pages.", "good");';
 			}
 			

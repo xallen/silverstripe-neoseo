@@ -41,7 +41,7 @@
 
 			$charset = ContentNegotiator::get_encoding();
 			$tags .= "<meta http-equiv=\"Content-type\" content=\"text/html; charset=$charset\" />\n";
-			// TODO: BUGFIX: This doesn't work all the time. Staging problem?
+			
 			if($this->owner->MetaKeywords || ($site_config->MetaKeywords and $this->owner->MetaKeywordsAppend)) {
 				$keywords = array();
 				if($site_config->MetaKeywords and $this->owner->MetaKeywordsAppend) $keywords[] = $site_config->MetaKeywords;
