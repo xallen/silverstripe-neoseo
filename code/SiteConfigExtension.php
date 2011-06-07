@@ -24,7 +24,10 @@
 					'SocialNetworkingTwitterConsumerKey' => 'Varchar(64)',
 					'SocialNetworkingTwitterConsumerSecret' => 'Varchar(64)',
 					'SocialNetworkingTwitterUserToken' => 'Varchar(64)',
-					'SocialNetworkingTwitterUserSecret' => 'Varchar(64)'
+					'SocialNetworkingTwitterUserSecret' => 'Varchar(64)',
+					'SocialNetworkingBitlyEnabled' => 'Boolean(0)',
+					'SocialNetworkingBitlyUsername' => 'Varchar(64)',
+					'SocialNetworkingBitlyApplicationKey' => 'Varchar(64)'
 				),
 				'has_many' => array(
 					'YahooAnalyticsVariables' => 'YahooAnalyticsVariable', /* This stores a list of configurable variables for YWA. */
@@ -45,6 +48,7 @@
 			/* Social Networking help. */
 			$social_networking_twitter_help = '<p>Your website can automate the \'tweet\' of recent updates when publishing a page by linking it with your Twitter account. You will need to <a href="https://dev.twitter.com/apps/new" target="_blank">register your website</a> as an application. You can then retrieve your <strong>Consumey Key</strong> and <strong>Consumer Secret</strong> by visiting the application you just registered under your <a href="https://dev.twitter.com/apps" target="_blank">list of registered applications</a>. Finally, you will need to provide the <strong>Access Token</strong> and <strong>Access Token Secret</strong> for your Twitter account via the "My Access Token" button on your application page.</p>';
 			$social_networking_twitter_content_help = '<p>You can configure the content of your tweet below. The following variables are available and will be replaced dynamically. <table><tr><td><strong>%PageTitle%</strong></td><td>The title of the published page.</td></tr><tr><td><strong>%BaseURL%</strong></td><td>The base URL of your website.</td></tr><tr><td><strong>%FullURL%</strong></td><td>The full URL of the published page.</td></tr></table></p>';
+			$social_networking_bitly_help = '<p>Enabling Bitly allows you to utilize a Bitly account to automatiaclly create shortened URLs for every page on your website automatically. These automatically generated links even maintain themselves, ensuring an update takes place when the standard URL changes in any way. These URLs can then be used the traditional way by copying and pasting them from each page via the Metadata tab. All other social networking plugins will automatically utilize the shorened Bitly URLs without any reconfiguration.</p>';
 			
 			/* Analytics help. */
 			$google_analytics_help = '<p>A free account is required to utilize Google Analytics. You can <a href="http://analytics.google.com/" target="_blank">register here</a>, or sign in to your existing account to retrieve your account number <a href="https://www.google.com/accounts/ServiceLogin?service=analytics" target="_blank">here</a>.</p>';
@@ -60,7 +64,8 @@
 				new TabSet('SearchEngineOptimization',
 					new Tab('GlobalMetadata'),
 					new TabSet('SocialNetworking',
-						new Tab('Twitter')
+						new Tab('Twitter'),
+						new Tab('Bitly', 'Bitly')
 						//new Tab('Facebook')
 					),
 					new Tab('KeywordSuggestion'),
@@ -94,6 +99,14 @@
 			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new TextField('SocialNetworkingTwitterConsumerSecret', 'Consumer Secret'));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new TextField('SocialNetworkingTwitterUserToken', 'User Token'));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Twitter', new TextField('SocialNetworkingTwitterUserSecret', 'User Secret'));
+			
+			/* Social Networking: Bitly fields. */
+			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Bitly', new HeaderField('SocialNetworkingBitlyHeader', 'Bitly'));
+			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Bitly', new LiteralField('SocialNetworkingBitlyHelp', $social_networking_bitly_help));
+			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Bitly', new CheckboxField('SocialNetworkingBitlyEnabled', 'Enable Bitly support'));
+			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Bitly', new HeaderField('SocialNetworkingBitlyAuthorizationHeader', 'Authorization', 4));
+			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Bitly', new TextField('SocialNetworkingBitlyUsername', 'Username'));
+			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Bitly', new TextField('SocialNetworkingBitlyApplicationKey', 'Application Key'));
 			
 			/* Keyword Suggestion fields. */
 			$fields->addFieldToTab('Root.SearchEngineOptimization.KeywordSuggestion', new HeaderField('KeywordSuggestionHeader', 'Keyword Suggestion'));
