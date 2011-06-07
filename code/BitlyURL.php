@@ -19,7 +19,11 @@
 		
 			/* If FullURL is set, we must build ShortURL. */
 			if($this->FullURL)
-				$this->ShortURL = $this->generate_url('http://allenmara.co.nz/cache.php?url='.$this->FullURL, 'xallen', 'R_28e24e6e117ac91fa15ce51561d3fb41');
+				$this->ShortURL = $this->generate_url(
+					'http://allenmara.co.nz/cache.php?url='.$this->FullURL,
+					SiteConfig::current_site_config()->SocialNetworkingBitlyUsername,
+					SiteConfig::current_site_config()->SocialNetworkingBitlyApplicationKey
+				);
 		
 			parent::onBeforeWrite();
 		}
