@@ -15,6 +15,11 @@
 			return $this->json;
 		}
 		
+		/* Failsafe URL return. */
+		function Link() {
+			return (($this->ShortURL) ? $this->ShortURL : $this->FullURL);
+		}
+		
 		/* Make a URL small via Bit.ly's API. */
 		private function generate_url($url, $login, $appkey) {
 			$bitly = 'http://api.bit.ly/shorten?version=2.0.1&longUrl='.urlencode($url).'&login='.$login.'&apiKey='.$appkey.'&format=json';

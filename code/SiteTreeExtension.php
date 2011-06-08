@@ -149,11 +149,13 @@
 			/* Chirp chirp chirp. */
 			$primed_content = str_replace(
 				array( /* Needles. */
+					'%URL%',
 					'%FullURL%',
 					'%BaseURL%',
 					'%PageTitle%'
 				),
 				array( /* Thread. */
+					(SiteConfigExtension::hasShortURLSupport() ? $this->owner->BitlyURL()->Link() : Director::protocolAndHost().$this->owner->Link()),
 					Director::protocolAndHost().$this->owner->Link(),
 					Director::absoluteBaseURL(),
 					$this->owner->Title
@@ -300,7 +302,7 @@
 		
 		/* We want to send a tweet on publish. */
 		function onAfterPublish() {
-			//$this->tweet();
+			$this->tweet();
 		}
 		
 		/* We need to add a button to handle social networking reporting in the form of a 'hype' button. */
