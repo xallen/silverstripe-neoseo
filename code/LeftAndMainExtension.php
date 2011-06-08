@@ -3,8 +3,29 @@
 	class LeftAndMainExtension extends Extension {
 	
 		/* List of functions allowed to handle requests. */
-		static $allowed_actions = array('force_append_setting');
+		static $allowed_actions = array('test_bitly', 'force_append_setting');
 
+		public function test_bitly() {
+			
+			/* Create a new BitlyURL, shorten a known valid URL as a test. */
+			$bitlyURL = new BitlyURL();
+			$bitlyURL->FullURL = "http://www.google.com/search?q=bitly+test"; /* Good ol' Google. */
+			$bitlyURL->write();
+			
+			/* Get raw JSON from Bitly. */
+			$json = $bitlyURL->getJSON();
+			
+			/* Delete the test object. */
+			DataObject::delete_by_id('BitlyURL', $bitlyURL->ID);
+			
+			/* Was there an error? */
+			if($json['errorCode']) {
+				return 'errorMessage("Bitly autentication failed with error code '.$json['errorCode'].' '.$json['errorMessage'].'.")';
+			} else {
+				return 'statusMessage("Bitly authentication successful.", "good");';
+			}
+		}
+		
 		/* TODO: Add Subsite support - further filter consideration. */
 		public function force_append_setting() {
 		
