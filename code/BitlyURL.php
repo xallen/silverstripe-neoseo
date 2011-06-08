@@ -2,17 +2,25 @@
 	
 	class BitlyURL extends DataObject {
 		
+		/* This variable is responsible for storing JSON returned data from the last request. */
+		private $json;
+		
 		static $db = array(
 			'ShortURL' => 'Varchar(60)',
 			'FullURL' => 'Varchar(255)'
 		);
 		
+		/* Return raw JSON response from the last query. */
+		function getJSON() {
+			return $this->json;
+		}
+		
 		/* Make a URL small via Bit.ly's API. */
 		private function generate_url($url, $login, $appkey) {
 			$bitly = 'http://api.bit.ly/shorten?version=2.0.1&longUrl='.urlencode($url).'&login='.$login.'&apiKey='.$appkey.'&format=json';
 			$response = file_get_contents($bitly); /* CURL instead? */
-			$json = @json_decode($response, true);
-			return isset($json['results'][$url]['shortUrl']) ? $json['results'][$url]['shortUrl'] : false;
+			$this->json = @json_decode($response, true);
+			return isset($this->json['results'][$url]['shortUrl']) ? $this->json['results'][$url]['shortUrl'] : false;
 		}
 		
 		function onBeforeWrite() {
