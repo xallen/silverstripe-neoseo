@@ -164,6 +164,18 @@
 			return $fields;
 		}
 		
+		/* Do we have short urls enabled, and are they configured correctly? */
+		static function hasShortURLSupport() {
+		
+			$config = SiteConfig::current_site_config();
+		
+			/* Enabled, with authorization information present? */
+			if($config->SocialNetworkingBitlyEnabled and $config->SocialNetworkingBitlyUsername and $config->SocialNetworkingBitlyApplicationKey)
+				return true;
+			
+			return false;
+		}
+		
 		static function excluded_word_list() {
 		
 			/* Read list. */

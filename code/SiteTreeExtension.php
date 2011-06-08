@@ -12,9 +12,8 @@
 					'MetaDescriptionAppend' => 'Enum("Beginning, End, No")',
 					'ExtraMetaAppend' => 'Boolean(1)'
 				),
-				/* Default database field values. */
-				'defaults' => array(
-					'MetaDescriptionAppend' => 'Beginning'
+				'has_one' => array(
+					'BitlyURL' => 'BitlyURL'
 				)
 			);
 		}
@@ -103,9 +102,14 @@
 		/* New/modified fields for the CMS. */
 		public function updateCMSFields($fields) {
 			
+			/* Only show the short URL field if there is something available to show. */
+			if(SiteConfigExtension::hasShortURLSupport() and $this->owner->BitlyURL()->ShortURL)
+				$fields->addFieldToTab('Root.Content.Metadata', new TextField('ShortURL', 'Shortened URL (Read Only)', $this->owner->BitlyURL()->ShortURL), 'MetaTagsHeader');
+			
 			$fields->addFieldToTab('Root.Content.Metadata', new CheckboxField('MetaKeywordsAppend', 'Append global keywords?'), 'MetaDescription');
 			$fields->addFieldToTab('Root.Content.Metadata', new DropdownField('MetaDescriptionAppend', 'Append global description?',  array('Beginning' => 'Yes, to the beginning', 'End' => 'Yes, to the end', 'No' => 'No')), 'ExtraMeta');
 			$fields->addFieldToTab('Root.Content.Metadata', new CheckboxField('ExtraMetaAppend', 'Append global custom meta tags?'));
+			
 			
 			/* Generate the list of suggested keywords. */
 			$suggested_keywords = $this->generateKeywords();
@@ -262,6 +266,30 @@
 				return $result;
 			}
 			return preg_match_all("/\p{L}[\p{L}\p{Mn}\p{Pd}]*/u", $string, $matches);
+		}
+		
+		function onBeforeWrite() {
+			
+			/* If we can't get this page's BitlyURL we will need to create one. */
+			if(!$bitlyURL = $this->owner->BitlyURL()) {
+				$bitlyURL = new BitlyURL();
+			}
+			
+			/* Generate the absolutely, full URL for this page. */
+			$new_url = Director::absoluteBaseURL().$this->owner->URLSegment;
+			
+			/* If the original Bitly.FullURL is found and already has a short version available, we can just return. */
+			if($bitlyURL->ShortURL and $bitlyURL->FullURL == $new_url) return;
+			
+			/* Set the full URL to this page to what we generated earlier. */
+			$bitlyURL->FullURL = $new_url;
+			
+			/* Write the record now, we need the ID later. */
+			$bitlyURL->write();
+			
+			/* Set this SiteTree's BitlyURLID manually from return above. */
+			if($this->owner->BitlyURLID != $bitlyURL->ID)
+				$this->owner->BitlyURLID = $bitlyURL->ID;
 		}
 		
 		function onAfterSave() {
