@@ -101,10 +101,10 @@
 		
 		/* New/modified fields for the CMS. */
 		public function updateCMSFields($fields) {
-			
+					
 			/* Only show the short URL field if there is something available to show. */
-			if(SiteConfigExtension::hasShortURLSupport() and $this->owner->BitlyURL()->ShortURL)
-				$fields->addFieldToTab('Root.Content.Metadata', new TextField('ShortURL', 'Shortened URL (Read Only)', $this->owner->BitlyURL()->ShortURL), 'MetaTagsHeader');
+			if(SiteConfigExtension::hasShortURLSupport() and $this->owner->BitlyURL()->Hash)
+				$fields->addFieldToTab('Root.Content.Metadata', new TextField('ShortURL', 'Shortened URL (Read Only)', $this->owner->BitlyURL()->Link()), 'MetaTagsHeader');
 			
 			$fields->addFieldToTab('Root.Content.Metadata', new CheckboxField('MetaKeywordsAppend', 'Append global keywords?'), 'MetaDescription');
 			$fields->addFieldToTab('Root.Content.Metadata', new DropdownField('MetaDescriptionAppend', 'Append global description?',  array('Beginning' => 'Yes, to the beginning', 'End' => 'Yes, to the end', 'No' => 'No')), 'ExtraMeta');

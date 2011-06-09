@@ -27,7 +27,8 @@
 					'SocialNetworkingTwitterUserSecret' => 'Varchar(64)',
 					'SocialNetworkingBitlyEnabled' => 'Boolean(0)',
 					'SocialNetworkingBitlyUsername' => 'Varchar(64)',
-					'SocialNetworkingBitlyApplicationKey' => 'Varchar(64)'
+					'SocialNetworkingBitlyApplicationKey' => 'Varchar(64)',
+					'SocialNetworkingBitlyDomain' => 'Enum("bit.ly, j.mp")',
 				),
 				'has_many' => array(
 					'YahooAnalyticsVariables' => 'YahooAnalyticsVariable', /* This stores a list of configurable variables for YWA. */
@@ -105,6 +106,8 @@
 			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Bitly', new HeaderField('SocialNetworkingBitlyHeader', 'Bitly'));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Bitly', new LiteralField('SocialNetworkingBitlyHelp', $social_networking_bitly_help));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Bitly', new CheckboxField('SocialNetworkingBitlyEnabled', 'Enable Bitly support'));
+			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Bitly', new DropdownField('SocialNetworkingBitlyDomain', 'Bitly domain', $this->owner->obj('SocialNetworkingBitlyDomain')->enumValues()));
+			
 			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Bitly', new HeaderField('SocialNetworkingBitlyAuthorizationHeader', 'Authorization', 4));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Bitly', new TextField('SocialNetworkingBitlyUsername', 'Username'));
 			$fields->addFieldToTab('Root.SearchEngineOptimization.SocialNetworking.Bitly', new TextField('SocialNetworkingBitlyApplicationKey', 'Application Key'));
