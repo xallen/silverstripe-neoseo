@@ -2,41 +2,67 @@
 	
 	class BitlyURL extends DataObject {
 		
-		/* This variable is responsible for storing JSON returned data from the last request. */
-		private $json;
-		
 		static $db = array(
-			'ShortURL' => 'Varchar(60)',
+			'Hash' => 'Varchar(6)',
 			'FullURL' => 'Varchar(255)'
 		);
 		
-		/* Return raw JSON response from the last query. */
-		function getJSON() {
-			return $this->json;
+		function Domain() {
+			return SiteConfig::current_site_config()->SocialNetworkingBitlyDomain;
 		}
 		
-		/* Failsafe URL return. */
 		function Link() {
-			return (($this->ShortURL) ? $this->ShortURL : $this->FullURL);
+		
+			/* If we have a hash we need to build the URL at this point and return it. */
+			if($this->Hash) { 
+				return Controller::join_links($this->Domain(), $this->Hash);
+			}
+			
+			/* Default to the full URL. */
+			return $this->FullURL;
 		}
 		
-		/* Make a URL small via Bit.ly's API. */
-		private function generate_url($url, $login, $appkey) {
-			$bitly = 'http://api.bit.ly/shorten?version=2.0.1&longUrl='.urlencode($url).'&login='.$login.'&apiKey='.$appkey.'&format=json';
-			$response = file_get_contents($bitly); /* CURL instead? */
-			$this->json = @json_decode($response, true);
-			return isset($this->json['results'][$url]['shortUrl']) ? $this->json['results'][$url]['shortUrl'] : false;
+		private static function api_execute($function, $paramaters = array()) {
+			
+			/* Here we set the default, required values if required. */
+			if(!in_array('login', $paramaters)) $paramaters['login'] = SiteConfig::current_site_config()->SocialNetworkingBitlyUsername;
+			if(!in_array('apiKey', $paramaters)) $paramaters['apiKey'] = SiteConfig::current_site_config()->SocialNetworkingBitlyApplicationKey;
+			
+			/* Build HTTP arguments based on the paramaters we have. */
+			$arguments = http_build_query($paramaters);
+			
+			/* Execute the entire query, incl. arguments and execute it. */
+			$response = @file_get_contents("http://api.bit.ly/v3/{$function}?{$arguments}");
+			
+			/* Return decoded response. */
+			return @json_decode($response, true);
+		}
+		
+		/* Shorten an URL. */
+		static function shorten($url) {
+			return BitlyURL::api_execute('shorten', array('longURL' => $url));
+		}
+		
+		/* Check whether our query succeed or not. */
+		static function api_query_successful(&$response) {
+			/* The status_code index must exist and equal 200, else failure. */
+			return isset($response['status_code']) and intval($response['status_code']) == 200;
 		}
 		
 		function onBeforeWrite() {
 		
-			/* If FullURL is set, we must build ShortURL. */
-			if($this->FullURL)
-				$this->ShortURL = $this->generate_url(
-					'http://allenmara.co.nz/cache.php?url='.$this->FullURL,
-					SiteConfig::current_site_config()->SocialNetworkingBitlyUsername,
-					SiteConfig::current_site_config()->SocialNetworkingBitlyApplicationKey
-				);
+			/* Build a hash if we have a full URL to work with. */
+			if($this->FullURL) {
+				
+				/* Query via API. */
+				$response = BitlyURL::shorten($this->FullURL);
+
+				/* If our query was successful, set the Hash in db to returned hash. */
+				if(BitlyURL::api_query_successful($response)) {
+					$this->Hash = $response['data']['hash'];
+					
+				}				
+			}
 		
 			parent::onBeforeWrite();
 		}
