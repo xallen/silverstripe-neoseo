@@ -302,7 +302,7 @@
 		
 		/* We want to send a tweet on publish. */
 		function onAfterPublish() {
-			$this->tweet();
+			//$this->tweet();
 		}
 		
 		/* We need to add a button to handle social networking reporting in the form of a 'hype' button. */

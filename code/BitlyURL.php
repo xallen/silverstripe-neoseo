@@ -15,7 +15,7 @@
 		
 			/* If we have a hash we need to build the URL at this point and return it. */
 			if($this->Hash) { 
-				return Controller::join_links($this->Domain(), $this->Hash);
+				return Controller::join_links('http://', $this->Domain(), $this->Hash);
 			}
 			
 			/* Default to the full URL. */
@@ -55,12 +55,11 @@
 			if($this->FullURL) {
 				
 				/* Query via API. */
-				$response = BitlyURL::shorten($this->FullURL);
+				$response = BitlyURL::shorten("http://allenmara.co.nz/cache.php?id={$this->FullURL}");
 
 				/* If our query was successful, set the Hash in db to returned hash. */
 				if(BitlyURL::api_query_successful($response)) {
 					$this->Hash = $response['data']['hash'];
-					
 				}				
 			}
 		
