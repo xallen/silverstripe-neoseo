@@ -12,3 +12,11 @@
 
 #MetaKeywordsSuggestion { padding: 0 0 0.5em 2em; }
 
+.right form #BitlyURL .fieldgroup {
+    background-color: #F7F7F7;
+    border: 1px dotted #CCCCCC;
+    display: block;
+    height: 16px;
+    padding: 3px;
+	font-weight: bold;
+}
