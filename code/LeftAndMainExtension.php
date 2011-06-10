@@ -12,15 +12,16 @@
 			$bitlyURL->FullURL = "http://www.google.com/search?q=bitly+test"; /* Good ol' Google. */
 			$bitlyURL->write();
 			
-			/* Get raw JSON from Bitly. */
-			$json = $bitlyURL->getJSON();
+			/* Get the status code of the last transaction. */
+			$last_status_code = $bitlyURL->getLastStatusCode();
+			$last_status_text = $bitlyURL->getLastStatusText();
 			
 			/* Delete the test object. */
 			DataObject::delete_by_id('BitlyURL', $bitlyURL->ID);
 			
 			/* Was there an error? */
-			if($json['errorCode']) {
-				return 'errorMessage("Bitly autentication failed with error code '.$json['errorCode'].' '.$json['errorMessage'].'.")';
+			if($last_status_code != 200) {
+				return 'errorMessage("Bitly autentication failed with error code '.$last_status_code.' '.$last_status_text.'.")';
 			} else {
 				return 'statusMessage("Bitly authentication successful.", "good");';
 			}

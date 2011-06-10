@@ -7,6 +7,8 @@
 			'FullURL' => 'Varchar(255)'
 		);
 		
+		private $last_status = array('status_code' => 0, 'status_txt' => '');
+		
 		function Domain() {
 			return SiteConfig::current_site_config()->SocialNetworkingBitlyDomain;
 		}
@@ -22,7 +24,7 @@
 			return $this->FullURL;
 		}
 		
-		private static function api_execute($function, $paramaters = array()) {
+		private function api_execute($function, $paramaters = array()) {
 			
 			/* Here we set the default, required values if required. */
 			if(!in_array('login', $paramaters)) $paramaters['login'] = SiteConfig::current_site_config()->SocialNetworkingBitlyUsername;
@@ -31,20 +33,39 @@
 			/* Build HTTP arguments based on the paramaters we have. */
 			$arguments = http_build_query($paramaters);
 			
-			/* Execute the entire query, incl. arguments and execute it. */
-			$response = @file_get_contents("http://api.bit.ly/v3/{$function}?{$arguments}");
+			/* Execute the entire query, incl. arguments. */
+			$json_response = @file_get_contents("http://api.bitly.com/v3/{$function}?{$arguments}");
+			
+			/* Decode our hopefully valid JSON-encoded response. */
+			$response = @json_decode($json_response, true);
+			
+			/* Store the status of this transaction. */
+			if(isset($response['status_code']) and isset($response['status_code'])) {
+				$this->last_status = array(
+					'status_code' => $response['status_code'],
+					'status_txt' => $response['status_txt']
+				);
+			}
 			
 			/* Return decoded response. */
-			return @json_decode($response, true);
+			return $response;
+		}
+		
+		function getLastStatusCode() {
+			return $this->last_status['status_code'];
+		}
+		
+		function getLastStatusText() {
+			return $this->last_status['status_txt'];
 		}
 		
 		/* Shorten an URL. */
-		static function shorten($url) {
+		function shorten($url) {
 			return BitlyURL::api_execute('shorten', array('longURL' => $url));
 		}
 		
 		/* Check whether our query succeed or not. */
-		static function api_query_successful(&$response) {
+		function api_query_successful(&$response) {
 			/* The status_code index must exist and equal 200, else failure. */
 			return isset($response['status_code']) and intval($response['status_code']) == 200;
 		}
