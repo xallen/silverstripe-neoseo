@@ -308,10 +308,10 @@
 		/* We need to add a button to handle social networking reporting in the form of a 'hype' button. */
 		function updateCMSActions(&$actions) {
 			
-			if($this->owner->canPublish() && !$this->owner->IsDeletedFromStage) {
-				/* Save, Publish and Hype! */
+			/*if($this->owner->canPublish() && !$this->owner->IsDeletedFromStage) {
+				// Save, Publish and Hype!
 				$actions->push(new FormAction('hype', _t('SiteTree.BUTTONSAVEPUBLISHHYPE', 'Save, Publish and Hype')));
-			}
+			}*/
 		}
 		
 	}

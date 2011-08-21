@@ -24,9 +24,12 @@ SilverStripe 2.4.0+
 
 ## Installation
 
-1. Unpack the NeoSEO directory to the root of your SilverStripe install.
-2. Ensure the directory is named 'neoseo'. Case is important on *NIX.
-3. Browse to: http://<silverstripe-install-url>/dev/build?flush=all
+1. Set your SilverStripe.org development environment to "debug" as per:
+   http://doc.silverstripe.org/sapphire/en/topics/debugging
+   This is very important as your installation will become unusable until the flush in step 4.
+2. Unpack the NeoSEO directory to the root of your SilverStripe install.
+3. Ensure the directory is named 'neoseo'. Case is important on *NIX.
+4. Browse to: http://<silverstripe-install-url>/dev/build?flush=all
 
 You can now configure most of NeoSEO via the "Search Engine Optimization" panel
 under your website configuration in SilverStripe's admin interface.
