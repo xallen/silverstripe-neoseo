@@ -85,6 +85,17 @@ The following variables are available to templates:
                                     (string) $Name
                                     (string) $Value
 
+## Developer Extensions
+
+I have added some functions I find useful to fine tune the output of SilverStripe.
+
+### SiteTree
+
+* overrideMetaTags($tags)  
+  This function can be called from any class extending SiteTree. It takes an associated array in
+  the following format:  
+  array('MetaTitle' => 'Title', 'MetaDescription' => 'Description', 'MetaKeywords' => 'Keywords')
+									
 ## Credits
 
 ### Developer
